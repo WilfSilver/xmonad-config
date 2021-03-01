@@ -14,3 +14,5 @@ bin/
 
 # files automatically created by xmonad
 xmonad.state
+
+.vscode
