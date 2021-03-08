@@ -4,8 +4,7 @@
 
 import           Control.Monad                  ( forM_ )
   -- Base
-import           XMonad                         ( (-->)
-                                                , (<+>)
+import           XMonad                         ( (<+>)
                                                 , Default(def)
                                                 , XConfig
                                                   ( borderWidth
@@ -27,23 +26,23 @@ import           XMonad.Hooks.EwmhDesktops      ( ewmh )
 import           XMonad.Hooks.ManageDocks       ( docksEventHook
                                                 , manageDocks
                                                 )
-import           XMonad.Hooks.ManageHelpers     ( doFullFloat
-                                                , isFullscreen
-                                                )
 import           XMonad.Hooks.ServerMode        ( serverModeEventHook
                                                 , serverModeEventHookCmd
                                                 , serverModeEventHookF
                                                 )
-import           XMonad.Layout.Fullscreen       ( fullscreenSupport )
+import           XMonad.Layout.Fullscreen       ( fullscreenEventHook
+                                                , fullscreenManageHook
+                                                , fullscreenSupport
+                                                )
 import           XMonad.Util.EZConfig           ( additionalKeysP )
 import           XMonad.Util.Run                ( safeSpawn )
 
-import           Hooks                          ( eventLogHookForPolyBar
-                                                , myManagementHook
+import           Hooks                          ( myManagementHook
                                                 , myStartupHook
                                                 )
 import           Keys                           ( myKeys )
 import           Layouts                        ( myLayoutHook )
+import           Polybar                        ( barEventLogHook )
 import           Settings                       ( myBorderWidth
                                                 , myFocusColour
                                                 , myModMask
@@ -59,14 +58,13 @@ main = do
   xmonad
     $                 fullscreenSupport
     $                 ewmh def
-                        { manageHook         = (isFullscreen --> doFullFloat)
-                                               <+> myManagementHook
-                                               <+> manageDocks
+                        { manageHook = fullscreenManageHook <+> myManagementHook <+> manageDocks
                         , handleEventHook    = serverModeEventHookCmd
                                                <+> serverModeEventHook
                                                <+> serverModeEventHookF "XMONAD_PRINT"
                                                                         (io . putStrLn)
                                                <+> docksEventHook
+                                               <+> fullscreenEventHook
                         , modMask            = myModMask
                         , terminal           = myTerminal
                         , startupHook        = myStartupHook
@@ -75,6 +73,6 @@ main = do
                         , borderWidth        = myBorderWidth
                         , normalBorderColor  = myNormColour
                         , focusedBorderColor = myFocusColour
-                        , logHook            = eventLogHookForPolyBar
+                        , logHook            = barEventLogHook
                         }
     `additionalKeysP` myKeys

@@ -5,16 +5,20 @@ module Settings
   , myBorderWidth
   , myNormColour
   , myFocusColour
+  , myCurrentWsColour
+  , myVisibleWsColour
+  , myNonEmptyWsColour
   , myWorkspaces
   ) where
 
 import           XMonad                         ( Dimension
                                                 , KeyMask
+                                                , WorkspaceId
                                                 , mod4Mask
                                                 )
 
 myFont :: String
-myFont = "xft:FiraCode:bold:size=20:antialias=true:hinting=true"
+myFont = "xft:FiraCode:bold:size=11:antialias=true:hinting=true"
 
 myModMask :: KeyMask
 myModMask = mod4Mask       -- Sets mod key to super/windows key
@@ -31,7 +35,16 @@ myNormColour = "#282c34"  -- Border color of normal windows
 myFocusColour :: String
 myFocusColour = "#bbc5ff"  -- Border color of focused windows
 
-myWorkspaces :: [String]
+myCurrentWsColour :: String
+myCurrentWsColour = "#fc0511"
+
+myVisibleWsColour :: String
+myVisibleWsColour = "#4386f0"
+
+myNonEmptyWsColour :: String
+myNonEmptyWsColour = "#e8e000"
+
+myWorkspaces :: [WorkspaceId]
 myWorkspaces =
     -- dev      www       sys       doc      chat        mus      gfx
   ["\xf121", "\xe007", "\xf120", "\xf02d", "\xf392", "\xf001", "\xf0c2"]

@@ -25,10 +25,9 @@ import           XMonad.Layout.LimitWindows     ( LimitWindows
 import           XMonad.Layout.Magnifier        ( Magnifier
                                                 , magnifier
                                                 )
-import qualified XMonad.Layout.MultiToggle     as MT
-                                                ( Toggle(..) )
 import           XMonad.Layout.MultiToggle      ( (??)
                                                 , EOT(EOT)
+                                                , Toggle(..)
                                                 , mkToggle
                                                 )
 import           XMonad.Layout.MultiToggle.Instances
@@ -84,11 +83,12 @@ tall
        Rename
        (ModifiedLayout LimitWindows (ModifiedLayout Spacing ResizableTall))
        a
-tall = renamed [Replace "\xf0ce"] $ limitWindows 12 $ mySpacing 4 $ ResizableTall
-  1
-  (3 / 100)
-  (1 / 2)
-  []
+tall =
+  renamed [Replace "\xf0ce"] $ limitWindows 12 $ mySpacing 4 $ ResizableTall
+    1
+    (3 / 100)
+    (1 / 2)
+    []
 
 magnify
   :: Eq a
@@ -110,7 +110,7 @@ magnify =
     $ ResizableTall 1 (3 / 100) (1 / 2) []
 
 monocle :: Eq a => ModifiedLayout Rename (ModifiedLayout LimitWindows Full) a
-monocle = renamed [Replace "\xf9d0"] $ limitWindows 20 Full
+monocle = renamed [Replace "\x1f9d0"] $ limitWindows 20 Full
 
 floats
   :: Eq a
@@ -121,7 +121,7 @@ floats
            (ModifiedLayout WindowArranger SimplestFloat)
        )
        a
-floats = renamed [Replace "\xf1d8"] $ limitWindows 20 simplestFloat
+floats = renamed [Replace "\xf21a"] $ limitWindows 20 simplestFloat
 
 tabs
   :: Eq a
@@ -144,8 +144,7 @@ tabs = renamed [Replace "\xf03c"] $ tabbed shrinkText myTabConfig
                     }
 
 toggleFullscreen :: X ()
-toggleFullscreen = do
-  sendMessage (MT.Toggle NBFULL) >> sendMessage ToggleStruts
+toggleFullscreen = sendMessage (Toggle NBFULL) >> sendMessage ToggleStruts
 
 myLayoutHook =
   avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts floats $ mkToggle
