@@ -36,13 +36,13 @@ myFocusColour :: String
 myFocusColour = "#bbc5ff"  -- Border color of focused windows
 
 myCurrentWsColour :: String
-myCurrentWsColour = "#fc0511"
+myCurrentWsColour = "#fc0511" -- Colour of the current active workspace in the bar
 
 myVisibleWsColour :: String
-myVisibleWsColour = "#4386f0"
+myVisibleWsColour = "#e88700" -- Colour of the visible workspaces in the bar (e.g. workspaces on different screens)
 
 myNonEmptyWsColour :: String
-myNonEmptyWsColour = "#e8e000"
+myNonEmptyWsColour = "#e8e000" -- Colour of the workspaces with windows open on them
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces =

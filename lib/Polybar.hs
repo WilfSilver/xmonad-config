@@ -52,14 +52,14 @@ formatWorkspaces currWs visWs nonEmptWs ws
         ++ "}"
         ++ getActionKey ws
         ++ ws
-        ++ "%{F-}%{A}  "
+        ++ "%{A}%{F-}  "
     | ws `elem` nonEmptWs
     = "%{F"
         ++ myNonEmptyWsColour
         ++ "}"
         ++ getActionKey ws
         ++ ws
-        ++ "%{F-}%{A}  "
+        ++ "%{A}%{F-}  "
     | otherwise
     = getActionKey ws ++ ws ++ "%{A}  "
 
