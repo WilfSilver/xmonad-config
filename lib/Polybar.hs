@@ -1,8 +1,11 @@
 module Polybar
-    ( barEventLogHook
+    ( dockEventLogHook,
+      dockStartupHook
     ) where
 
-import           Control.Monad                  ( join )
+import           Control.Monad                  ( forM_
+                                                , join
+                                                )
 import           Data.List                      ( elemIndex )
 import           Data.Maybe                     ( fromMaybe )
 import           Settings                       ( myCurrentWsColour
@@ -24,9 +27,28 @@ import           XMonad.Core                    ( Layout
                                                 )
 import qualified XMonad.StackSet               as W
 import           XMonad.Util.NamedWindows       ( getName )
+import           XMonad.Util.Run                ( safeSpawn )
 
-barEventLogHook :: X ()
-barEventLogHook = do
+-- This runs when xmonad starts up and will create the files that are needed for communication
+dockStartupHook :: X ()
+dockStartupHook = do
+  winset <- gets windowset
+  createDockFiles $ W.screens winset
+
+
+-- Recursively goes through each screen creating its file set
+createDockFiles
+  :: [W.Screen WorkspaceId (Layout Window) Window ScreenId ScreenDetail] -> X ()
+createDockFiles []       = return ()
+createDockFiles (x : xs) = do
+  forM_ [".xmonad-workspace-log", ".xmonad-title-log"]
+    $ \file -> safeSpawn "touch" ["/tmp/" ++ file ++ screenID]
+  createDockFiles xs
+  where screenID = drop 2 $ show $ W.screen x
+
+-- Event hook for the dock, updates the files to have correct information on them
+dockEventLogHook :: X ()
+dockEventLogHook = do
     winset <- gets windowset
     visWs  <- visibleWorkspaces
     let nonEmptWs = getNonEmptyWorkspaces (W.hidden winset)
@@ -36,11 +58,22 @@ barEventLogHook = do
 
     writeScreenLogFiles (W.screens winset) wsStr
 
+-- Gets a list of the visible workspaces
 visibleWorkspaces :: X [WorkspaceId]
 visibleWorkspaces = do
     winset <- gets windowset
     return $ map (W.tag . W.workspace) (W.visible winset)
 
+-- Gets the workspaces that have a window on it (this is a getter because it needs an input)
+getNonEmptyWorkspaces :: [W.Workspace WorkspaceId l a] -> [WorkspaceId]
+getNonEmptyWorkspaces []       = []
+getNonEmptyWorkspaces (x : xs) = do
+  let stack = W.stack x
+  case stack of
+    Nothing -> getNonEmptyWorkspaces xs
+    Just _  -> W.tag x : getNonEmptyWorkspaces xs
+
+-- Formats all the workspaces correctly, so that each icon is clickable, taking to the correct workspace and has the correct colour to signify if it is displayed or has windows on it
 formatWorkspaces
     :: WorkspaceId -> [WorkspaceId] -> [WorkspaceId] -> WorkspaceId -> String
 formatWorkspaces currWs visWs nonEmptWs ws
@@ -63,21 +96,14 @@ formatWorkspaces currWs visWs nonEmptWs ws
     | otherwise
     = getActionKey ws ++ ws ++ "%{A}  "
 
-getNonEmptyWorkspaces :: [W.Workspace WorkspaceId l a] -> [WorkspaceId]
-getNonEmptyWorkspaces []       = []
-getNonEmptyWorkspaces (x : xs) = do
-    let stack = W.stack x
-    case stack of
-        Nothing -> getNonEmptyWorkspaces xs
-        Just _  -> W.tag x : getNonEmptyWorkspaces xs
-
-
+-- Creates the correct command for going to a given workspace
 getActionKey :: WorkspaceId -> String
 getActionKey ws =
     "%{A1:xdotool key super+"
         ++ show (fromMaybe 0 (elemIndex ws myWorkspaces) + 1)
         ++ ":}"
 
+-- Writes all log files for each screen individually (uses recursion)
 writeScreenLogFiles
     :: [W.Screen WorkspaceId (Layout Window) Window ScreenId ScreenDetail]
     -> String
@@ -105,6 +131,7 @@ writeScreenLogFiles (x : xs) fmtWs = do
     titleLogFile     = "/tmp/.xmonad-title-log"
     workspaceLogFile = "/tmp/.xmonad-workspace-log"
 
+-- Adds the given layout's name to the left of the workspace's icons
 addLayoutName :: Layout Window -> String -> String
 addLayoutName layout contents =
     "%{A1:xdotool key super+shift+Tab:}"
@@ -112,12 +139,13 @@ addLayoutName layout contents =
         ++ "%{A} | "
         ++ contents
 
+-- Returns windows title
 getWindowTitle :: Window -> X String
 getWindowTitle win = do
     namedWin <- getName win
     return $ show namedWin
 
-
+-- Shortens the title if it is too long
 shortenTitle :: String -> String
 shortenTitle x = if length x > 50 then take 47 x ++ "..." else x
 

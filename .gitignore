@@ -12,7 +12,11 @@ xmonad-*
 # directory created by `build` script
 bin/
 
+dist-newstyle/
+
 # files automatically created by xmonad
 xmonad.state
 
 .vscode
+.stignore
+.stfolder

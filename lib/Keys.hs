@@ -45,10 +45,10 @@ myNamedKeys =
   , ("Open Terminal", "M-<Return>", spawn myTerminal)
 
     -- Rofi
-  , ("Application Menu", "M-S-<Return>", spawn "rofi -show drun")
+  , ("Application Menu", "M-S-<Return>", spawn "~/.config/rofi/bin/launcher_misc")
   , ("Run Command", "M-C-<Return>", spawn "rofi -show run")
-  , ("Switch Window", "M-<Tab>", spawn "rofi -show window")
-  , ("Power Menu", "C-M1-<Delete>", spawn "rofi -show power-menu")
+  , ("Switch Window", "M-<Tab>", spawn "~/.config/rofi/window_switcher/launcher.sh")
+  , ("Power Menu", "C-M1-<Delete>", spawn "./.config/rofi/bin/powermenu")
 
     -- Windows
   , ("Close Current Window", "M-w", kill1)

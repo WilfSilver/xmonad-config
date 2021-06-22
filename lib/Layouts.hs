@@ -72,8 +72,13 @@ import           XMonad.Actions.MouseResize     ( mouseResize )
 import           XMonad.Hooks.ManageDocks       ( ToggleStruts(..)
                                                 , avoidStruts
                                                 )
+import           XMonad.Layout.PerWorkspace     ( onWorkspace
+                                                , onWorkspaces
+                                                )
 
-import           Settings                       ( myFont )
+import           Settings                       ( myFont
+                                                , myWorkspaces
+                                                )
 
 mySpacing :: Integer -> l a -> ModifiedLayout Spacing l a
 mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
@@ -106,7 +111,7 @@ magnify =
   renamed [Replace "\xf00e"]
     $ magnifier
     $ limitWindows 12
-    $ mySpacing 2
+    $ mySpacing 0
     $ ResizableTall 1 (3 / 100) (1 / 2) []
 
 monocle :: Eq a => ModifiedLayout Rename (ModifiedLayout LimitWindows Full) a
@@ -147,9 +152,11 @@ toggleFullscreen :: X ()
 toggleFullscreen = sendMessage (Toggle NBFULL) >> sendMessage ToggleStruts
 
 myLayoutHook =
-  avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts floats $ mkToggle
-    (NBFULL ?? NOBORDERS ?? EOT)
-    myDefaultLayout
+  avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts floats $
+  onWorkspaces [head myWorkspaces, myWorkspaces !! 4] (noBorders monocle ||| tall) $
+  onWorkspace (myWorkspaces !! 1) (noBorders magnify ||| noBorders tall ||| noBorders monocle) $
+  onWorkspace (myWorkspaces !! 7) floats $
+  mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
  where
   myDefaultLayout =
     tall ||| magnify ||| noBorders monocle ||| floats ||| noBorders tabs
