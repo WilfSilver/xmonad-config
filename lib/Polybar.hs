@@ -110,7 +110,7 @@ writeScreenLogFiles
     -> X ()
 writeScreenLogFiles []       _     = return ()
 writeScreenLogFiles (x : xs) fmtWs = do
-    winTitle <- maybe (return "") (getWindowTitle . W.focus) maybeStack
+    winTitle <- maybe (return " ") (getWindowTitle . W.focus) maybeStack
 
     -- Writes to the title and workspace log files with the screen id on the end e.g. /tmp/.xmonad-title-log0
     io $ writeFile (titleLogFile ++ screenID) $ shortenTitle winTitle
