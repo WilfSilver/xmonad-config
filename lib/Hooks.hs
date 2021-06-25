@@ -28,10 +28,7 @@ myStartupHook :: X ()
 myStartupHook = do
   spawnOnce "nitrogen --restore &"
   spawnOnce "picom &"
-  spawnOnce "conky &"
-  spawnOnce "discord"
-  spawn "~/.config/polybar/scripts/launch.sh"
-  spawnOnce "flameshot"
+  spawn "~/.config/polybar/bin/launch.sh"
   setWMName "LG3Dw"
 
 myManagementHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
@@ -39,9 +36,12 @@ myManagementHook = composeAll
   [ className =? "htop" --> doShift (myWorkspaces !! 3)
   , className =? "firefox" --> doShift (myWorkspaces !! 1)
   , className =? "code" --> doShift (head myWorkspaces)
+  , className =? "Thunderbird" --> doShift (myWorkspaces !! 5)
+  , className =? "Spotify" --> doShift (myWorkspaces !! 6)
   , title =? "Discord" --> doShift (myWorkspaces !! 4)
+  , title =? "Signal" --> doShift (myWorkspaces !! 4)
   , title =? "Teams" --> doShift (myWorkspaces !! 4)
-  , className =? "Gimp" --> doShift (myWorkspaces !! 6)
+  , className =? "Gimp" --> doShift (myWorkspaces !! 7)
   , className =? "Gimp" --> doFloat
   , (className =? "firefox" <&&> resource =? "Dialog") --> doFloat
   ]
