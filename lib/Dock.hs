@@ -1,4 +1,4 @@
-module Polybar
+module Dock
     ( dockEventLogHook,
       dockStartupHook
     ) where

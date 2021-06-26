@@ -20,9 +20,8 @@ import           XMonad                         ( (<+>)
                                                 , xmonad
                                                 )
 import           XMonad.Hooks.EwmhDesktops      ( ewmh )
-import           XMonad.Hooks.ManageDocks       ( docksEventHook
-                                                , manageDocks
-                                                , docks
+import           XMonad.Hooks.ManageDocks       ( docks
+                                                , docksEventHook
                                                 )
 import           XMonad.Hooks.ServerMode        ( serverModeEventHook
                                                 , serverModeEventHookCmd
@@ -39,7 +38,7 @@ import           Hooks                          ( myManagementHook
                                                 )
 import           Keys                           ( myKeys )
 import           Layouts                        ( myLayoutHook )
-import           Polybar                        ( dockEventLogHook
+import           Dock                           ( dockEventLogHook
                                                 , dockStartupHook
                                                 )
 import           Settings                       ( myBorderWidth
@@ -55,8 +54,9 @@ main = do
   xmonad
     $ fullscreenSupport
     $ docks
-    $ ewmh def
-        { manageHook = fullscreenManageHook <+> manageDocks <+> myManagementHook
+    $ ewmh
+    $ def
+        { manageHook = fullscreenManageHook <+> myManagementHook
         , handleEventHook    = serverModeEventHookCmd
                                <+> serverModeEventHook
                                <+> serverModeEventHookF "XMONAD_PRINT"
