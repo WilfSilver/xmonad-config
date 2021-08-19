@@ -1,0 +1,228 @@
+[
+	{
+		"id": "xmonadRecompile",
+		"description": "Recompile XMonad",
+		"binding": "M-C-r"
+	},
+	{
+		"id": "xmonadRestart",
+		"description": "Restart XMonad",
+		"binding": "M-S-r"
+	},
+	{
+		"id": "xmonadQuit",
+		"description": "Quit XMonad",
+		"binding": "M-S-q"
+	},
+
+	{
+		"id": "closeCurrent",
+		"description": "Close Current Window",
+		"binding": "M-w"
+	},
+	{
+		"id": "closeAllWs",
+		"description": "Close All Windows On Workspaces",
+		"binding": "M-S-w"
+	},
+	{
+		"id": "moveToMasterWin",
+		"description": "Move To Master Window",
+		"binding": "M-m"
+	},
+	{
+		"id": "moveToNextWin",
+		"description": "Move To Next Window",
+		"binding": "M-j"
+	},
+	{
+		"id": "moveToPrevWin",
+		"description": "Move To Prev Window",
+		"binding": "M-k"
+	},
+	{
+		"id": "swapFocusMasterWin",
+		"description": "Swap Focused And Master Window",
+		"binding": "M-S-m"
+	},
+	{
+		"id": "swapFocusNextWin",
+		"description": "Swap Focused With Next Window",
+		"binding": "M-S-j"
+	},
+	{
+		"id": "swapFocusPrevWin",
+		"description": "Swap Focused With Prev Window",
+		"binding": "M-S-k"
+	},
+	{
+		"id": "moveFocusMasterWin",
+		"description": "Moves Focused Window To Master",
+		"binding": "M-<Backspace>"
+	},
+	{
+		"id": "rotateAllExMaster",
+		"description": "Rotate All Windows Except Master",
+		"binding": "M1-S-<Tab>"
+	},
+	{
+		"id": "rotateAll",
+		"description": "Rotate All Windows",
+		"binding": "M1-C-<Tab>"
+	},
+
+	{
+		"id": "toggleFloat",
+		"description": "Toggles 'floats' Layout",
+		"binding": "M-f"
+	},
+	{
+		"id": "floatToTile",
+		"description": "Push Floating Window To Tile",
+		"binding": "M-<Delete>"
+	},
+	{
+		"id": "allFloatToTile",
+		"description": "Push All Floating Windows To Tile",
+		"binding": "M-S-<Delete>"
+	},
+
+	{
+		"id": "switchNextLayout",
+		"description": "Switch To Next Layout",
+		"binding": "M-S-<Tab>"
+	},
+	{
+		"id": "arrange",
+		"description": "Arrange",
+		"binding": "M-C-M1-<Up>"
+	},
+	{
+		"id": "deArrange",
+		"description": "DeArrange",
+		"binding": "M-C-M1-<Down>"
+	},
+	{
+		"id": "fullscreen",
+		"description": "Toggle Fullscreen",
+		"binding": "M-S-f"
+	},
+	{
+		"id": "strutsToggle",
+		"description": "Toggle Struts",
+		"binding": "M-S-<Space>"
+	},
+	{
+		"id": "shrinkWinHorz",
+		"description": "Shrink Window Horiz",
+		"binding": "M-h"
+	},
+	{
+		"id": "expWinHorz",
+		"description": "Expand Window Horiz",
+		"binding": "M-l"
+	},
+	{
+		"id": "shrinkWinVert",
+		"description": "Shrink Window Vert",
+		"binding": "M-C-j"
+	},
+	{
+		"id": "expWinVert",
+		"description": "Expand Window Vert",
+		"binding": "M-C-k"
+	},
+
+	{
+		"id": "switchNextMonitor",
+		"description": "Switch To Next Monitor",
+		"binding": "M-."
+	},
+	{
+		"id": "switchPrevMonitor",
+		"description": "Switch To Prev Monitor",
+		"binding": "M-,"
+	},
+	{
+		"id": "switchNextWs",
+		"description": "Switch To Next Workspace",
+		"binding": "M-S-."
+	},
+	{
+		"id": "switchPrevWs",
+		"description": "Switch To Prev Workspace",
+		"binding": "M-S-,"
+	},
+
+	{
+		"id": "term",
+		"description": "Open Terminal",
+		"binding": "M-<Return>"
+	},
+	{
+		"id": "screenshot",
+		"description": "Screenshot",
+		"binding": "M-S-s",
+		"command": "flameshot gui"
+	},
+	{
+		"id": "termScratch",
+		"description": "ScratchPad: Terminal",
+		"binding": "M-S-<Return>"
+	},
+	{
+		"id": "volumeScratch",
+		"description": "ScratchPad: Volume control",
+		"binding": "M-v"
+	},
+
+	{
+		"id": "appLaunch",
+		"description": "Rofi: Application Menu",
+		"binding": "M-<Space>",
+		"command": "~/.config/rofi/bin/launcher_misc"
+	},
+	{
+		"id": "command",
+		"description": "Rofi: Run Command",
+		"binding": "M-S-<Space>",
+		"command": "rofi -show run"
+	},
+	{
+		"id": "switchMenu",
+		"description": "Rofi: Switch Window Menu",
+		"binding": "M-<Tab>",
+		"command": "~/.config/rofi/window_switcher/launcher.sh"
+	},
+	{
+		"id": "powerMenu",
+		"description": "Rofi: Power Menu",
+		"binding": "C-M1-<Delete>",
+		"command": "~/.config/rofi/bin/powermenu"
+	},
+
+	{
+		"id": "dunstClose",
+		"description": "Dunst: Close",
+		"binding": "C-<Space>",
+		"command": "dunstctl close"
+	},
+	{
+		"id": "dunstCloseAll",
+		"description": "Dunst: Close all",
+		"binding": "C-S-<Space>",
+		"command": "dunstctl close-all"
+	},
+	{
+		"id": "dunstHistory",
+		"description": "Dunst: History",
+		"binding": "C-`",
+		"command": "dunstctl history-pop"
+	},
+	{
+		"id": "dunstContext",
+		"description": "Dunst: Context",
+		"binding": "C-S-.",
+		"command": "dunstctl context"
+	}
+]

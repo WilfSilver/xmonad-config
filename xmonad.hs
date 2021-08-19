@@ -48,15 +48,18 @@ import           Settings                       ( myBorderWidth
                                                 , myTerminal
                                                 , myWorkspaces
                                                 )
+import           ScratchPad                     ( myScratchPads )
+import XMonad.Util.NamedScratchpad              (namedScratchpadManageHook)
 
 main :: IO ()
 main = do
+  keys <- myKeys
   xmonad
     $ fullscreenSupport
     $ docks
     $ ewmh
     $ def
-        { manageHook = fullscreenManageHook <+> myManagementHook
+        { manageHook = fullscreenManageHook <+> myManagementHook <+> namedScratchpadManageHook myScratchPads
         , handleEventHook    = serverModeEventHookCmd
                                <+> serverModeEventHook
                                <+> serverModeEventHookF "XMONAD_PRINT"
@@ -73,4 +76,4 @@ main = do
         , focusedBorderColor = myFocusColour
         , logHook            = dockEventLogHook
         }
-    `additionalKeysP` myKeys
+    `additionalKeysP` keys

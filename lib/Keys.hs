@@ -1,5 +1,7 @@
+{-#LANGUAGE OverloadedStrings#-}
 module Keys
   ( myKeys
+  , myShortcuts
   ) where
 
 import           System.Exit                    ( exitSuccess )
@@ -32,74 +34,104 @@ import qualified XMonad.Layout.ToggleLayouts   as T
 import           XMonad.Layout.WindowArranger   ( WindowArrangerMsg(..) )
 import qualified XMonad.StackSet               as W
 
+import           Control.Monad                  ( mzero )
+import           Data.Aeson                     ( (.:)
+                                                , (.:?)
+                                                , FromJSON
+                                                , Value(Object)
+                                                , eitherDecode
+                                                , parseJSON
+                                                )
+import qualified Data.ByteString.Lazy          as B
+import           Data.Text                      ( Text
+                                                , unpack
+                                                )
+
 import           Layouts                        ( toggleFullscreen )
+import           ScratchPad                     ( spawnScratchPad )
 import           Settings                       ( myTerminal )
 
-myNamedKeys :: [(String, String, X ())]
-myNamedKeys =
-  [ ("Recompile XMonad", "M-C-r", spawn "xmonad --recompile")
-  , ("Restart XMonad", "M-S-r", spawn "xmonad --restart")
-  , ("Quit XMonad", "M-S-q", io exitSuccess)
+data Shortcut = Shortcut
+  { id          :: Text
+  , description :: Text
+  , binding     :: Text
+  , command     :: Maybe Text
+  }
+  deriving Show
 
-    -- Open my preferred terminal
-  , ("Open Terminal", "M-<Return>", spawn myTerminal)
+instance FromJSON Shortcut where
+  parseJSON (Object v) =
+    Shortcut
+      <$> v
+      .:  "id"
+      <*> v
+      .:  "description"
+      <*> v
+      .:  "binding"
+      <*> v
+      .:? "command"
+  parseJSON _ = mzero
 
-    -- Rofi
-  , ("Application Menu", "M-S-<Return>", spawn "~/.config/rofi/bin/launcher_misc")
-  , ("Run Command", "M-C-<Return>", spawn "rofi -show run")
-  , ("Switch Window", "M-<Tab>", spawn "~/.config/rofi/window_switcher/launcher.sh")
-  , ("Power Menu", "C-M1-<Delete>", spawn "./.config/rofi/bin/powermenu")
+  -- TODO: Make it so it is dynamic to current user's directory or xmonad config
+shortcutsConfigFile :: FilePath
+shortcutsConfigFile = "/home/hugo/.xmonad/config/keys.json"
 
-    -- Windows
-  , ("Close Current Window", "M-w", kill1)
-  , ("Close All Windows On Workspaces", "M-S-w", killAll)
+getShortcutsConfig :: IO B.ByteString
+getShortcutsConfig = B.readFile shortcutsConfigFile
 
-    -- Floating windows
-  , ("Toggles 'floats' Layout", "M-f", sendMessage (T.Toggle "floats"))
-  , ( "Push Floating Window To Tile"
-    , "M-<Delete>"
-    , withFocused $ windows . W.sink
-    )
-  , ("Push All Floating Windows To Tile", "M-S-<Delete>" , sinkAll)
+myShortcuts :: IO [Shortcut]
+myShortcuts = do
+  output <-
+    (eitherDecode <$> getShortcutsConfig) :: IO (Either String [Shortcut])
+  case output of
+    Left  _  -> return []
+    Right ps -> return ps
 
-    -- Windows navigation
-  , ("Move To Master Window", "M-m", windows W.focusMaster)
-  , ("Move To Next Window"              , "M-j"          , windows W.focusDown)
-  , ("Move To Prev Window"              , "M-k"          , windows W.focusUp)
-  , ("Swap Focused And Master Window"   , "M-S-m"        , windows W.swapMaster)
-  , ("Swap Focused With Next Window"    , "M-S-j"        , windows W.swapDown)
-  , ("Swap Focused With Prev Window"    , "M-S-k"        , windows W.swapUp)
-  , ("Moves Focused Window To Master"   , "M-<Backspace>", promote)
-  , ("Rotate All Windows Except Master" , "M1-S-<Tab>"   , rotSlavesDown)
-  , ("Rotate All Windows"               , "M1-C-<Tab>"   , rotAllDown)
 
-      -- Layouts
-  , ("Switch To Next Layout", "M-S-<Tab>", sendMessage NextLayout)
-  , ("Arrange"                          , "M-C-M1-<Up>"  , sendMessage Arrange)
-  , ("DeArrange", "M-C-M1-<Down>", sendMessage DeArrange)
-  , ("Toggle Fullscreen"                , "M-<Space>"    , toggleFullscreen)
-  , ("Toggle Struts", "M-S-<Space>", sendMessage ToggleStruts)
+getKeyCommand :: Text -> X ()
+getKeyCommand keyID | keyID == "xmonadRecompile"    = spawn "xmonad --recompile"
+                    | keyID == "xmonadRestart"      = spawn "xmonad --restart"
+                    | keyID == "xmonadQuit"         = io exitSuccess
+                    | keyID == "closeCurrent"       = kill1
+                    | keyID == "closeAllWs"         = killAll
+                    | keyID == "toggleFloat" = sendMessage (T.Toggle "floats")
+                    | keyID == "floatToTile" = withFocused $ windows . W.sink
+                    | keyID == "allFloatToTile"     = sinkAll
+                    | keyID == "moveToMasterWin"    = windows W.focusMaster
+                    | keyID == "moveToNextWin"      = windows W.focusDown
+                    | keyID == "moveToPrevWin"      = windows W.focusUp
+                    | keyID == "swapFocusMasterWin" = windows W.swapMaster
+                    | keyID == "swapFocusNextWin"   = windows W.swapDown
+                    | keyID == "swapFocusPrevWin"   = windows W.swapUp
+                    | keyID == "moveFocusMasterWin" = promote
+                    | keyID == "rotateAllExMaster"  = rotSlavesDown
+                    | keyID == "toggleFloat"        = rotAllDown
+                    | keyID == "switchNextLayout"   = sendMessage NextLayout
+                    | keyID == "arrange"            = sendMessage Arrange
+                    | keyID == "deArrange"          = sendMessage DeArrange
+                    | keyID == "fullscreen"         = toggleFullscreen
+                    | keyID == "strutsToggle"       = sendMessage ToggleStruts
+                    | keyID == "shrinkWinHorz"      = sendMessage Shrink
+                    | keyID == "expWinHorz"         = sendMessage Expand
+                    | keyID == "shrinkWinVert"      = sendMessage MirrorShrink
+                    | keyID == "expWinVert"         = sendMessage MirrorExpand
+                    | keyID == "switchNextMonitor"  = nextScreen
+                    | keyID == "switchPrevMonitor"  = prevScreen
+                    | keyID == "switchNextWs"       = nextWS
+                    | keyID == "switchPrevWs"       = prevWS
+                    | keyID == "term"               = spawn myTerminal
+                    | keyID == "termScratch"        = spawnScratchPad "term"
+                    | keyID == "volumeScratch" = spawnScratchPad "pavucontrol"
+                    | otherwise                     = return ()
 
-    -- Window manipulation
-  , ("Shrink Window Horiz"              , "M-h"          , sendMessage Shrink)
-  , ("Expand Window Horiz"              , "M-l"          , sendMessage Expand)
-  , ("Shrink Window Vert", "M-C-j", sendMessage MirrorShrink)
-  , ("Expand Window Vert", "M-C-k", sendMessage MirrorExpand)
 
-    -- Tools
-  , ("Screenshot", "M-S-s", spawn "flameshot gui")
+extractKeys :: Shortcut -> (String, X ())
+extractKeys key =
+  ( unpack $ binding key
+  , maybe (getKeyCommand $ Keys.id key) (spawn . unpack) (command key)
+  )
 
-    -- Monitors
-  , ("Switch To Next Monitor"           , "M-."          , nextScreen)
-  , ("Switch To Prev Monitor"           , "M-,"          , prevScreen)
-
-    -- Workspaces
-  , ("Switch To Next Monitor"           , "M-S-."        , nextWS)
-  , ("Switch To Prev Monitor"           , "M-S-,"        , prevWS)
-  ]
-
-extractKeys :: (String, String, X ()) -> (String, X ())
-extractKeys (_, key, func) = (key, func)
-
-myKeys :: [(String, X ())]
-myKeys = map extractKeys myNamedKeys
+myKeys :: IO [(String, X ())]
+myKeys = do
+  keys <- myShortcuts
+  return $ map extractKeys keys
