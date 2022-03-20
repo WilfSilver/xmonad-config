@@ -11,6 +11,8 @@ module Layouts
 
 import           XMonad                         ( Default(def)
                                                 , Full(Full)
+                                                , LayoutClass(description)
+                                                , Mirror(Mirror)
                                                 , X
                                                 , sendMessage
                                                 , (|||)
@@ -76,6 +78,9 @@ import           XMonad.Layout.PerWorkspace     ( onWorkspace
                                                 , onWorkspaces
                                                 )
 
+import           PerScreen                      ( PerScreen
+                                                , ifWider
+                                                )
 import           Settings                       ( myFont
                                                 , myWorkspaces
                                                 )
@@ -152,11 +157,28 @@ toggleFullscreen :: X ()
 toggleFullscreen = sendMessage (Toggle NBFULL) >> sendMessage ToggleStruts
 
 myLayoutHook =
-  avoidStruts $ mouseResize $ windowArrange $ T.toggleLayouts floats $
-  onWorkspaces [head myWorkspaces, myWorkspaces !! 4] (noBorders monocle ||| tall) $
-  onWorkspace (myWorkspaces !! 1) (noBorders magnify ||| noBorders tall ||| noBorders monocle) $
-  onWorkspace (myWorkspaces !! 7) floats $
-  mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
+  avoidStruts
+    $ mouseResize
+    $ windowArrange
+    $ T.toggleLayouts floats
+    $ onWorkspaces [head myWorkspaces, myWorkspaces !! 4]
+                   (noBorders monocle ||| getPerScreenLayout tall)
+    $ onWorkspace
+        (myWorkspaces !! 1)
+        (   getPerScreenLayout (noBorders magnify)
+        ||| getPerScreenLayout (noBorders tall)
+        ||| noBorders monocle
+        )
+    $ onWorkspace (myWorkspaces !! 7) floats
+    $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
  where
   myDefaultLayout =
-    tall ||| magnify ||| noBorders monocle ||| floats ||| noBorders tabs
+    getPerScreenLayout tall
+      ||| getPerScreenLayout magnify
+      ||| noBorders monocle
+      ||| getPerScreenLayout floats
+      ||| noBorders tabs
+
+getPerScreenLayout
+  :: LayoutClass l a => l a -> PerScreen l (ModifiedLayout Rename (Mirror l)) a
+getPerScreenLayout l = ifWider l $ renamed [Replace $ description l] $ Mirror l

@@ -5,7 +5,7 @@ cabal-version:       >=1.10
 
 executable my-xmonad
   main-is:             ../xmonad.hs
-  other-modules: Keys Layouts Settings Hooks Dock ScratchPad
+  other-modules: Keys Layouts Settings Hooks Dock ScratchPad Util PerScreen
   build-depends:       base
                      , xmonad >= 0.13
                      , xmonad-contrib >= 0.13

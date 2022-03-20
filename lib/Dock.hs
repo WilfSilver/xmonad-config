@@ -13,6 +13,7 @@ import           Settings                       ( myCurrentWsColour
                                                 , myVisibleWsColour
                                                 , myWorkspaces
                                                 )
+
 import           XMonad                         ( ScreenDetail
                                                 , WorkspaceId
                                                 , X
@@ -26,8 +27,13 @@ import           XMonad.Core                    ( Layout
                                                 , description
                                                 )
 import qualified XMonad.StackSet               as W
-import           XMonad.Util.NamedWindows       ( getName )
 import           XMonad.Util.Run                ( safeSpawn )
+
+import           Util                           ( getNonEmptyWorkspaces
+                                                , getWindowTitle
+                                                , visibleWorkspaces
+                                                , currentWorkspace
+                                                )
 
 -- This runs when xmonad starts up and will create the files that are needed for communication
 dockStartupHook :: X ()
@@ -51,27 +57,12 @@ dockEventLogHook :: X ()
 dockEventLogHook = do
     winset <- gets windowset
     visWs  <- visibleWorkspaces
+    currWs <- currentWorkspace
     let nonEmptWs = getNonEmptyWorkspaces (W.hidden winset)
-    let currWs    = W.currentTag winset
     let wsStr = join
             $ map (formatWorkspaces currWs visWs nonEmptWs) myWorkspaces
 
     writeScreenLogFiles (W.screens winset) wsStr
-
--- Gets a list of the visible workspaces
-visibleWorkspaces :: X [WorkspaceId]
-visibleWorkspaces = do
-    winset <- gets windowset
-    return $ map (W.tag . W.workspace) (W.visible winset)
-
--- Gets the workspaces that have a window on it (this is a getter because it needs an input)
-getNonEmptyWorkspaces :: [W.Workspace WorkspaceId l a] -> [WorkspaceId]
-getNonEmptyWorkspaces []       = []
-getNonEmptyWorkspaces (x : xs) = do
-  let stack = W.stack x
-  case stack of
-    Nothing -> getNonEmptyWorkspaces xs
-    Just _  -> W.tag x : getNonEmptyWorkspaces xs
 
 -- Formats all the workspaces correctly, so that each icon is clickable, taking to the correct workspace and has the correct colour to signify if it is displayed or has windows on it
 formatWorkspaces
@@ -139,13 +130,6 @@ addLayoutName layout contents =
         ++ "%{A} | "
         ++ contents
 
--- Returns windows title
-getWindowTitle :: Window -> X String
-getWindowTitle win = do
-    namedWin <- getName win
-    return $ show namedWin
-
 -- Shortens the title if it is too long
 shortenTitle :: String -> String
 shortenTitle x = if length x > 50 then take 47 x ++ "..." else x
-
