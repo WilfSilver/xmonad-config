@@ -94,8 +94,8 @@ getKeyCommand keyID | keyID == "xmonadRecompile"    = spawn "xmonad --recompile"
                     | keyID == "xmonadQuit"         = io exitSuccess
                     | keyID == "closeCurrent"       = kill1
                     | keyID == "closeAllWs"         = killAll
-                    | keyID == "toggleFloat" = sendMessage (T.Toggle "floats")
-                    | keyID == "floatToTile" = withFocused $ windows . W.sink
+                    | keyID == "toggleFloat"        = sendMessage (T.Toggle "floats")
+                    | keyID == "floatToTile"        = withFocused $ windows . W.sink
                     | keyID == "allFloatToTile"     = sinkAll
                     | keyID == "moveToMasterWin"    = windows W.focusMaster
                     | keyID == "moveToNextWin"      = windows W.focusDown
@@ -121,9 +121,8 @@ getKeyCommand keyID | keyID == "xmonadRecompile"    = spawn "xmonad --recompile"
                     | keyID == "switchPrevWs"       = prevWS
                     | keyID == "term"               = spawn myTerminal
                     | keyID == "termScratch"        = spawnScratchPad "term"
-                    | keyID == "volumeScratch" = spawnScratchPad "pavucontrol"
+                    | keyID == "volumeScratch"      = spawnScratchPad "pavucontrol"
                     | otherwise                     = return ()
-
 
 extractKeys :: Shortcut -> (String, X ())
 extractKeys key =

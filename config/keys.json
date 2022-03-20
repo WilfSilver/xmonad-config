@@ -180,7 +180,7 @@
 		"id": "appLaunch",
 		"description": "Rofi: Application Menu",
 		"binding": "M-<Space>",
-		"command": "~/.config/rofi/bin/launcher_misc"
+		"command": "~/.config/rofi/bin/launcher"
 	},
 	{
 		"id": "command",
@@ -192,7 +192,7 @@
 		"id": "switchMenu",
 		"description": "Rofi: Switch Window Menu",
 		"binding": "M-<Tab>",
-		"command": "~/.config/rofi/window_switcher/launcher.sh"
+		"command": "~/.config/rofi/bin/window_switcher"
 	},
 	{
 		"id": "powerMenu",
