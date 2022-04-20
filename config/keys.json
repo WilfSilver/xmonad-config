@@ -177,6 +177,13 @@
 	},
 
 	{
+		"id": "lockScreen",
+		"description": "Locks the screen using betterlockscreen",
+		"binding": "M-S-l",
+		"command": "betterlockscreen -l dimblur"
+	},
+
+	{
 		"id": "appLaunch",
 		"description": "Rofi: Application Menu",
 		"binding": "M-<Space>",
