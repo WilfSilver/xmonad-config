@@ -2,7 +2,9 @@
 
 -- Base
 import           XMonad                         ( (<+>)
+                                                , Atom
                                                 , Default(def)
+                                                , X
                                                 , XConfig
                                                   ( borderWidth
                                                   , focusedBorderColor
@@ -16,31 +18,43 @@ import           XMonad                         ( (<+>)
                                                   , terminal
                                                   , workspaces
                                                   )
-                                                , io
+                                                , asks
+                                                , changeProperty32
+                                                , getAtom
+                                                , getWindowProperty32
+                                                , liftIO
+                                                , propModeAppend
+                                                , theRoot
+                                                , withDisplay
                                                 , xmonad
                                                 )
 import           XMonad.Hooks.EwmhDesktops      ( ewmh )
-import           XMonad.Hooks.ManageDocks       ( docks
-                                                , docksEventHook
-                                                )
-import           XMonad.Hooks.ServerMode        ( serverModeEventHook
-                                                , serverModeEventHookCmd
-                                                , serverModeEventHookF
-                                                )
+import           XMonad.Hooks.ManageDocks       ( docks )
 import           XMonad.Layout.Fullscreen       ( fullscreenEventHook
                                                 , fullscreenManageHook
                                                 , fullscreenSupport
                                                 )
+import           XMonad.Util.Cursor             ( setDefaultCursor
+                                                , xC_left_ptr
+                                                )
 import           XMonad.Util.EZConfig           ( additionalKeysP )
+import           XMonad.Util.NamedScratchpad    ( namedScratchpadManageHook )
 
+import           Control.Monad                  ( when
+                                                , join
+                                                )
+import           Data.Maybe                     ( maybeToList )
+
+import           Dock                           ( dockEventLogHook
+                                                , dockStartupHook
+                                                )
 import           Hooks                          ( myManagementHook
                                                 , myStartupHook
                                                 )
 import           Keys                           ( myKeys )
 import           Layouts                        ( myLayoutHook )
-import           Dock                           ( dockEventLogHook
-                                                , dockStartupHook
-                                                )
+import           ScratchPad                     ( myScratchPads )
+import           Server                         ( myServerEventHook )
 import           Settings                       ( myBorderWidth
                                                 , myFocusColour
                                                 , myModMask
@@ -48,8 +62,23 @@ import           Settings                       ( myBorderWidth
                                                 , myTerminal
                                                 , myWorkspaces
                                                 )
-import           ScratchPad                     ( myScratchPads )
-import XMonad.Util.NamedScratchpad              (namedScratchpadManageHook)
+
+-- Stolen from https://github.com/evanjs/gentoo-dotfiles/commit/cbf78364ea60e62466594340090d8e99200e8e08 (thanks)
+addNETSupported :: Atom -> X ()
+addNETSupported x   = withDisplay $ \dpy -> do
+    root            <- asks theRoot
+    a_NET_SUPPORTED <- getAtom "_NET_SUPPORTED"
+    atom            <- getAtom "ATOM"
+    liftIO $ do
+       sup <- join . maybeToList <$> getWindowProperty32 dpy a_NET_SUPPORTED root
+       when (fromIntegral x `notElem` sup) $
+         changeProperty32 dpy root a_NET_SUPPORTED atom propModeAppend [fromIntegral x]
+
+addEWMHFullscreen :: X ()
+addEWMHFullscreen = do
+  wms <- getAtom "_NET_WM_STATE"
+  wfs <- getAtom "_NET_WM_STATE_FULLSCREEN"
+  mapM_ addNETSupported [wms, wfs]
 
 main :: IO ()
 main = do
@@ -59,16 +88,17 @@ main = do
     $ docks
     $ ewmh
     $ def
-        { manageHook = fullscreenManageHook <+> myManagementHook <+> namedScratchpadManageHook myScratchPads
-        , handleEventHook    = serverModeEventHookCmd
-                               <+> serverModeEventHook
-                               <+> serverModeEventHookF "XMONAD_PRINT"
-                                                        (io . putStrLn)
-                               <+> docksEventHook
+        { manageHook         = fullscreenManageHook
+                               <+> myManagementHook
+                               <+> namedScratchpadManageHook myScratchPads
+        , handleEventHook    = myServerEventHook
                                <+> fullscreenEventHook
         , modMask            = myModMask
         , terminal           = myTerminal
-        , startupHook        = myStartupHook <+> dockStartupHook
+        , startupHook        = myStartupHook
+                               <+> dockStartupHook
+                               <+> setDefaultCursor xC_left_ptr
+                               >> addEWMHFullscreen
         , layoutHook         = myLayoutHook
         , workspaces         = myWorkspaces
         , borderWidth        = myBorderWidth

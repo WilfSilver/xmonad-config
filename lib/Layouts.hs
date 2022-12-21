@@ -86,7 +86,7 @@ import           Settings                       ( myFont
                                                 )
 
 mySpacing :: Integer -> l a -> ModifiedLayout Spacing l a
-mySpacing i = spacingRaw False (Border i i i i) True (Border i i i i) True
+mySpacing i = spacingRaw False (Border 0 i i i) True (Border 0 i i i) True
 
 tall
   :: ModifiedLayout

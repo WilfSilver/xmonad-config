@@ -3,11 +3,32 @@
 # For more information, please see the documentation at:
 #   https://docs.haskellstack.org/en/stable/lock_files
 
+packages:
+- completed:
+    hackage: xmonad-0.17.1@sha256:63a52cf808ddd8f4320084bc3577c167c0e6add013555c05fd32ceb3bccdfce5,5759
+    pantry-tree:
+      sha256: 74589fbc42e4179a055801966afdb86e95b4012edcbd867583334cab24439046
+      size: 2486
+  original:
+    hackage: xmonad-0.17.1@sha256:63a52cf808ddd8f4320084bc3577c167c0e6add013555c05fd32ceb3bccdfce5,5759
+- completed:
+    hackage: xmonad-contrib-0.17.1@sha256:df50cc15569c0bb4bc79cd031f7283f20760ae453887785f4689ab09ecb28935,21951
+    pantry-tree:
+      sha256: e5c991ae33c3a09cf40d09cc18ebf42dd6b0992fd5d6acca94650926f7984377
+      size: 22735
+  original:
+    hackage: xmonad-contrib-0.17.1@sha256:df50cc15569c0bb4bc79cd031f7283f20760ae453887785f4689ab09ecb28935,21951
+- completed:
+    hackage: X11-1.10.3@sha256:e0b9a48aab0a963a4b5015287fe3aaf93181697931770a2c8477befe88a9e775,3759
+    pantry-tree:
+      sha256: 2e0fb5c5f856ed823a359ca92a0f32f7e24cc1f07576f5e63776820a334cd22c
+      size: 2861
+  original:
+    hackage: X11-1.10.3@sha256:e0b9a48aab0a963a4b5015287fe3aaf93181697931770a2c8477befe88a9e775,3759
 snapshots:
-- original:
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/17/4.yaml
-  completed:
+- completed:
     sha256: f11e2153044f5f71ea7b1c9398f4721f517c9bd37642ed769647b896564021f3
-    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/17/4.yaml
     size: 563103
-packages: []
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/17/4.yaml
+  original:
+    url: https://raw.githubusercontent.com/commercialhaskell/stackage-snapshots/master/lts/17/4.yaml

@@ -1,0 +1,34 @@
+cradle:
+  cabal:
+    - path: "xmonad.hs"
+      component: "my-xmonad:exe:my-xmonad"
+
+    - path: "lib/Dock.hs"
+      component: "my-xmonad:exe:my-xmonad"
+
+    - path: "lib/Hooks.hs"
+      component: "my-xmonad:exe:my-xmonad"
+
+    - path: "lib/Keys.hs"
+      component: "my-xmonad:exe:my-xmonad"
+
+    - path: "lib/Layouts.hs"
+      component: "my-xmonad:exe:my-xmonad"
+
+    - path: "lib/PerScreen.hs"
+      component: "my-xmonad:exe:my-xmonad"
+
+    - path: "lib/ScratchPad.hs"
+      component: "my-xmonad:exe:my-xmonad"
+
+    - path: "lib/Server.hs"
+      component: "my-xmonad:exe:my-xmonad"
+
+    - path: "lib/Settings.hs"
+      component: "my-xmonad:exe:my-xmonad"
+
+    - path: "lib/Util.hs"
+      component: "my-xmonad:exe:my-xmonad"
+
+    - path: "xmonadctl.hs"
+      component: "my-xmonad:exe:xmonadctl"

@@ -58,6 +58,12 @@ myBarBackgroundColour = "#282c34"
 
 myWorkspaces :: [WorkspaceId]
 myWorkspaces =
-    -- dev      www       sys       doc      chat       mail     music     gfx
-  ["\xf121", "\xe007", "\xf120", "\xf02d", "\xf392", "\xf0e0", "\xf001", "\xf0c2"]
-    -- 1         2         3         4         5         6         7         8
+  [ "\xf121" -- dev   1
+  , "\xf7a2" -- www   2
+  , "\xf120" -- sys   3
+  , "\xf02d" -- doc   4
+  , "\xf392" -- chat  5
+  , "\xf0e0" -- mail  6
+  , "\xf001" -- music 7
+  , "\xf0c2" -- gfx   8
+  ]
