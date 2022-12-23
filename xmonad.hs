@@ -52,9 +52,10 @@ import           Hooks.Dock                     ( dockEventLogHook
                                                 , dockStartupHook
                                                 )
 import           Hooks.Server                   ( myServerEventHook )
+import           Hooks.Layout                   ( myLayoutHook )
 
 import           Keys                           ( myKeys )
-import           Layouts                        ( myLayoutHook )
+
 import           ScratchPad                     ( myScratchPads )
 
 import           Settings                       ( myBorderWidth

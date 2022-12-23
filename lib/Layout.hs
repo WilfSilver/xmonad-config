@@ -1,21 +1,14 @@
-module Layouts
+module Layout
   ( mySpacing
   , tall
   , magnify
   , monocle
   , floats
   , tabs
-  , toggleFullscreen
-  , myLayoutHook
   ) where
 
 import           XMonad                         ( Default(def)
                                                 , Full(Full)
-                                                , LayoutClass(description)
-                                                , Mirror(Mirror)
-                                                , X
-                                                , sendMessage
-                                                , (|||)
                                                 )
 import           XMonad.Layout.Decoration       ( Decoration
                                                 , DefaultShrinker
@@ -27,18 +20,6 @@ import           XMonad.Layout.LimitWindows     ( LimitWindows
 import           XMonad.Layout.Magnifier        ( Magnifier
                                                 , magnifier
                                                 )
-import           XMonad.Layout.MultiToggle      ( (??)
-                                                , EOT(EOT)
-                                                , Toggle(..)
-                                                , mkToggle
-                                                )
-import           XMonad.Layout.MultiToggle.Instances
-                                                ( StdTransformers
-                                                  ( NBFULL
-                                                  , NOBORDERS
-                                                  )
-                                                )
-import           XMonad.Layout.NoBorders        ( noBorders )
 import           XMonad.Layout.Renamed          ( Rename(Replace)
                                                 , renamed
                                                 )
@@ -64,26 +45,9 @@ import           XMonad.Layout.Tabbed           ( TabbedDecoration
                                                 , shrinkText
                                                 , tabbed
                                                 )
-import qualified XMonad.Layout.ToggleLayouts   as T
-                                                ( toggleLayouts )
-import           XMonad.Layout.WindowArranger   ( WindowArranger
-                                                , windowArrange
-                                                )
+import           XMonad.Layout.WindowArranger   ( WindowArranger )
 
-import           XMonad.Actions.MouseResize     ( mouseResize )
-import           XMonad.Hooks.ManageDocks       ( ToggleStruts(..)
-                                                , avoidStruts
-                                                )
-import           XMonad.Layout.PerWorkspace     ( onWorkspace
-                                                , onWorkspaces
-                                                )
-
-import           PerScreen                      ( PerScreen
-                                                , ifWider
-                                                )
-import           Settings                       ( myFont
-                                                , myWorkspaces
-                                                )
+import           Settings                       ( myFont )
 
 mySpacing :: Integer -> l a -> ModifiedLayout Spacing l a
 mySpacing i = spacingRaw False (Border 0 i i i) True (Border 0 i i i) True
@@ -152,33 +116,3 @@ tabs = renamed [Replace "\xf03c"] $ tabbed shrinkText myTabConfig
                     , activeTextColor     = "#ffffff"
                     , inactiveTextColor   = "#d0d0d0"
                     }
-
-toggleFullscreen :: X ()
-toggleFullscreen = sendMessage (Toggle NBFULL) >> sendMessage ToggleStruts
-
-myLayoutHook =
-  avoidStruts
-    $ mouseResize
-    $ windowArrange
-    $ T.toggleLayouts floats
-    $ onWorkspaces [head myWorkspaces, myWorkspaces !! 4]
-                   (noBorders monocle ||| getPerScreenLayout tall)
-    $ onWorkspace
-        (myWorkspaces !! 1)
-        (   getPerScreenLayout (noBorders magnify)
-        ||| getPerScreenLayout (noBorders tall)
-        ||| noBorders monocle
-        )
-    $ onWorkspace (myWorkspaces !! 7) floats
-    $ mkToggle (NBFULL ?? NOBORDERS ?? EOT) myDefaultLayout
- where
-  myDefaultLayout =
-    getPerScreenLayout tall
-      ||| getPerScreenLayout magnify
-      ||| noBorders monocle
-      ||| getPerScreenLayout floats
-      ||| noBorders tabs
-
-getPerScreenLayout
-  :: LayoutClass l a => l a -> PerScreen l (ModifiedLayout Rename (Mirror l)) a
-getPerScreenLayout l = ifWider l $ renamed [Replace $ description l] $ Mirror l

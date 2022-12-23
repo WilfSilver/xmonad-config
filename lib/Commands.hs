@@ -45,7 +45,8 @@ import           Data.Text                      ( Text
                                                 , pack
                                                 )
 
-import           Layouts                        ( toggleFullscreen )
+import           Layout.Util                    ( toggleFullscreen )
+
 import           ScratchPad                     ( spawnScratchPad )
 import           Settings                       ( myTerminal
                                                 , myWorkspaces

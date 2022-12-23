@@ -5,7 +5,7 @@ cabal-version:       >=1.10
 
 executable my-xmonad
   main-is:             ../xmonad.hs
-  other-modules: Commands Hooks.Dock Hooks Keys Layouts PerScreen ScratchPad Hooks.Server Settings Util
+  other-modules: Commands Hooks Hooks.Dock Hooks.Layout Hooks.Server Keys Layout Layout.PerScreen Layout.Util ScratchPad Settings Util
   build-depends:       base
                      , xmonad >= 0.17
                      , xmonad-contrib >= 0.17
