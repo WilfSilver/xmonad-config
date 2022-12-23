@@ -53,39 +53,39 @@ import           Settings                       ( myTerminal
 
 defaultCommands :: [(String, X ())]
 defaultCommands =
-  [ ("xmonadRecompile"   , spawn "xmonad --recompile")
-  , ("xmonadRestart"     , restart "xmonad" True)
-  , ("xmonadQuit"        , io exitSuccess)
-  , ("closeCurrent"      , kill1)
-  , ("closeAllWs"        , killAll)
-  , ("toggleFloat"       , sendMessage (T.Toggle "floats"))
-  , ("floatToTile"       , withFocused $ windows . W.sink)
-  , ("allFloatToTile"    , sinkAll)
-  , ("moveToMasterWin"   , windows W.focusMaster)
-  , ("moveToNextWin"     , windows W.focusDown)
-  , ("moveToPrevWin"     , windows W.focusUp)
-  , ("swapFocusMasterWin", windows W.swapMaster)
-  , ("swapFocusNextWin"  , windows W.swapDown)
-  , ("swapFocusPrevWin"  , windows W.swapUp)
-  , ("moveFocusMasterWin", promote)
-  , ("rotateAllExMaster" , rotSlavesDown)
-  , ("toggleFloat"       , rotAllDown)
-  , ("nextLayout"        , sendMessage NextLayout)
-  , ("arrange"           , sendMessage Arrange)
-  , ("deArrange"         , sendMessage DeArrange)
-  , ("fullscreen"        , toggleFullscreen)
-  , ("strutsToggle"      , sendMessage ToggleStruts)
-  , ("shrinkWinHorz"     , sendMessage Shrink)
-  , ("expWinHorz"        , sendMessage Expand)
-  , ("shrinkWinVert"     , sendMessage MirrorShrink)
-  , ("expWinVert"        , sendMessage MirrorExpand)
-  , ("switchNextMonitor" , nextScreen)
-  , ("switchPrevMonitor" , prevScreen)
-  , ("switchNextWs"      , nextWS)
-  , ("switchPrevWs"      , prevWS)
-  , ("term"              , spawn myTerminal)
-  , ("termScratch"       , spawnScratchPad "term")
-  , ("volumeScratch"     , spawnScratchPad "pavucontrol")
+  [ ("recompile"        , spawn "xmonad --recompile")
+  , ("restart"          , restart "xmonad" True)
+  , ("quit"             , io exitSuccess)
+  , ("close"            , kill1)
+  , ("close-all"        , killAll)
+  , ("toggle-float"     , sendMessage (T.Toggle "floats"))
+  , ("float-to-tile"    , withFocused $ windows . W.sink)
+  , ("all-float-to-tile", sinkAll)
+  , ("focus-master"     , windows W.focusMaster)
+  , ("focus-next"       , windows W.focusDown)
+  , ("focus-prev"       , windows W.focusUp)
+  , ("swap-with-master" , windows W.swapMaster)
+  , ("swap-with-next"   , windows W.swapDown)
+  , ("swap-with-prev"   , windows W.swapUp)
+  , ("promote"          , promote)
+  , ("rotate-slaves"    , rotSlavesDown)
+  , ("rotate-all"       , rotAllDown)
+  , ("next-layout"      , sendMessage NextLayout)
+  , ("arrange"          , sendMessage Arrange)
+  , ("dearrange"        , sendMessage DeArrange)
+  , ("fullscreen"       , toggleFullscreen)
+  , ("toggle-struts"    , sendMessage ToggleStruts)
+  , ("shrink-horz"      , sendMessage Shrink)
+  , ("expand-horz"      , sendMessage Expand)
+  , ("shrink-vert"      , sendMessage MirrorShrink)
+  , ("expand-vert"      , sendMessage MirrorExpand)
+  , ("next-screen"      , nextScreen)
+  , ("prev-screen"      , prevScreen)
+  , ("next-ws"          , nextWS)
+  , ("prev-ws"          , prevWS)
+  , ("term"             , spawn myTerminal)
+  , ("scratch-term"     , spawnScratchPad "term")
+  , ("scratch-volume"   , spawnScratchPad "pavucontrol")
   ]
 
 getCommand :: Text -> X ()
@@ -93,10 +93,10 @@ getCommand cmd = do
   fromMaybe (return ()) (lookup cmd myTextCommands)
 
 getWsShiftCmd :: String -> String
-getWsShiftCmd ws = "shift_" ++ ws
+getWsShiftCmd ws = "shift-" ++ ws
 
 getWsViewCmd :: String -> String
-getWsViewCmd ws = "view_" ++ ws
+getWsViewCmd ws = "view-" ++ ws
 
 myCommands :: [(String, X ())]
 myCommands = defaultCommands ++ workspaceCommands
@@ -111,8 +111,8 @@ workspaceCommands = (workspaceCommands' . reverse) myWorkspaces
 
 getCommandsForWs :: WorkspaceId -> Int -> [(String, X ())]
 getCommandsForWs wsid i =
-  [ (getWsShiftCmd wsid  , windows $ W.shift wsid)
-  , (getWsViewCmd wsid   , windows $ W.view wsid)
+  [ (getWsShiftCmd wsid    , windows $ W.shift wsid)
+  , (getWsViewCmd wsid     , windows $ W.view wsid)
   , (getWsShiftCmd $ show i, windows $ W.shift wsid)
   , (getWsViewCmd $ show i , windows $ W.view wsid)
   ]

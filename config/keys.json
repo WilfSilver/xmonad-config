@@ -1,94 +1,94 @@
 [
 	{
-		"id": "xmonadRecompile",
+		"id": "recompile",
 		"description": "Recompile XMonad",
 		"binding": "M-C-r"
 	},
 	{
-		"id": "xmonadRestart",
+		"id": "restart",
 		"description": "Restart XMonad",
 		"binding": "M-S-r"
 	},
 	{
-		"id": "xmonadQuit",
+		"id": "quit",
 		"description": "Quit XMonad",
 		"binding": "M-S-q"
 	},
 
 	{
-		"id": "closeCurrent",
+		"id": "close",
 		"description": "Close Current Window",
 		"binding": "M-w"
 	},
 	{
-		"id": "closeAllWs",
+		"id": "close-all",
 		"description": "Close All Windows On Workspaces",
 		"binding": "M-S-w"
 	},
 	{
-		"id": "moveToMasterWin",
+		"id": "focus-master",
 		"description": "Move To Master Window",
 		"binding": "M-m"
 	},
 	{
-		"id": "moveToNextWin",
+		"id": "focus-next",
 		"description": "Move To Next Window",
 		"binding": "M-j"
 	},
 	{
-		"id": "moveToPrevWin",
+		"id": "focus-prev",
 		"description": "Move To Prev Window",
 		"binding": "M-k"
 	},
 	{
-		"id": "swapFocusMasterWin",
+		"id": "swap-with-master",
 		"description": "Swap Focused And Master Window",
 		"binding": "M-S-m"
 	},
 	{
-		"id": "swapFocusNextWin",
+		"id": "swap-with-next",
 		"description": "Swap Focused With Next Window",
 		"binding": "M-S-j"
 	},
 	{
-		"id": "swapFocusPrevWin",
+		"id": "swap-with-prev",
 		"description": "Swap Focused With Prev Window",
 		"binding": "M-S-k"
 	},
 	{
-		"id": "moveFocusMasterWin",
+		"id": "promote",
 		"description": "Moves Focused Window To Master",
 		"binding": "M-<Backspace>"
 	},
 	{
-		"id": "rotateAllExMaster",
+		"id": "rotate-slaves",
 		"description": "Rotate All Windows Except Master",
 		"binding": "M1-S-<Tab>"
 	},
 	{
-		"id": "rotateAll",
+		"id": "rotate-all",
 		"description": "Rotate All Windows",
 		"binding": "M1-C-<Tab>"
 	},
 
 	{
-		"id": "toggleFloat",
+		"id": "toggle-float",
 		"description": "Toggles 'floats' Layout",
 		"binding": "M-f"
 	},
 	{
-		"id": "floatToTile",
+		"id": "float-to-tile",
 		"description": "Push Floating Window To Tile",
 		"binding": "M-<Delete>"
 	},
 	{
-		"id": "allFloatToTile",
+		"id": "all-float-to-tile",
 		"description": "Push All Floating Windows To Tile",
 		"binding": "M-S-<Delete>"
 	},
 
 	{
-		"id": "nextLayout",
+		"id": "next-layout",
 		"description": "Switch To Next Layout",
 		"binding": "M-S-<Tab>"
 	},
@@ -98,7 +98,7 @@
 		"binding": "M-C-M1-<Up>"
 	},
 	{
-		"id": "deArrange",
+		"id": "dearrange",
 		"description": "DeArrange",
 		"binding": "M-C-M1-<Down>"
 	},
@@ -108,48 +108,48 @@
 		"binding": "M-S-f"
 	},
 	{
-		"id": "strutsToggle",
+		"id": "toggle-struts",
 		"description": "Toggle Struts",
 		"binding": "M-S-<Space>"
 	},
 	{
-		"id": "shrinkWinHorz",
+		"id": "shrink-horz",
 		"description": "Shrink Window Horiz",
 		"binding": "M-h"
 	},
 	{
-		"id": "expWinHorz",
+		"id": "expand-horz",
 		"description": "Expand Window Horiz",
 		"binding": "M-l"
 	},
 	{
-		"id": "shrinkWinVert",
+		"id": "shrink-vert",
 		"description": "Shrink Window Vert",
 		"binding": "M-C-j"
 	},
 	{
-		"id": "expWinVert",
+		"id": "expand-vert",
 		"description": "Expand Window Vert",
 		"binding": "M-C-k"
 	},
 
 	{
-		"id": "switchNextMonitor",
+		"id": "next-screen",
 		"description": "Switch To Next Monitor",
 		"binding": "M-."
 	},
 	{
-		"id": "switchPrevMonitor",
+		"id": "prev-screen",
 		"description": "Switch To Prev Monitor",
 		"binding": "M-,"
 	},
 	{
-		"id": "switchNextWs",
+		"id": "next-ws",
 		"description": "Switch To Next Workspace",
 		"binding": "M-S-."
 	},
 	{
-		"id": "switchPrevWs",
+		"id": "prev-ws",
 		"description": "Switch To Prev Workspace",
 		"binding": "M-S-,"
 	},
@@ -166,12 +166,12 @@
 		"command": "flameshot gui"
 	},
 	{
-		"id": "termScratch",
+		"id": "scratch-term",
 		"description": "ScratchPad: Terminal",
 		"binding": "M-S-<Return>"
 	},
 	{
-		"id": "volumeScratch",
+		"id": "scratch-volume",
 		"description": "ScratchPad: Volume control",
 		"binding": "M-v"
 	},
