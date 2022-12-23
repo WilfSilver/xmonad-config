@@ -1,6 +1,8 @@
 module Commands
   ( defaultCommands
   , getCommand
+  , getWsShiftCmd
+  , getWsViewCmd
   , myCommands
   , myTextCommands
   , workspaceCommands
@@ -68,7 +70,7 @@ defaultCommands =
   , ("moveFocusMasterWin", promote)
   , ("rotateAllExMaster" , rotSlavesDown)
   , ("toggleFloat"       , rotAllDown)
-  , ("switchNextLayout"  , sendMessage NextLayout)
+  , ("nextLayout"        , sendMessage NextLayout)
   , ("arrange"           , sendMessage Arrange)
   , ("deArrange"         , sendMessage DeArrange)
   , ("fullscreen"        , toggleFullscreen)
@@ -86,10 +88,15 @@ defaultCommands =
   , ("volumeScratch"     , spawnScratchPad "pavucontrol")
   ]
 
--- Altered from XMonad.Actions.Commands
 getCommand :: Text -> X ()
 getCommand cmd = do
   fromMaybe (return ()) (lookup cmd myTextCommands)
+
+getWsShiftCmd :: String -> String
+getWsShiftCmd ws = "shift_" ++ ws
+
+getWsViewCmd :: String -> String
+getWsViewCmd ws = "view_" ++ ws
 
 myCommands :: [(String, X ())]
 myCommands = defaultCommands ++ workspaceCommands
@@ -104,10 +111,10 @@ workspaceCommands = (workspaceCommands' . reverse) myWorkspaces
 
 getCommandsForWs :: WorkspaceId -> Int -> [(String, X ())]
 getCommandsForWs wsid i =
-  [ ("shift_" ++ wsid  , windows $ W.shift wsid)
-  , ("view_" ++ wsid   , windows $ W.view wsid)
-  , ("shift_" ++ show i, windows $ W.shift wsid)
-  , ("view_" ++ show i , windows $ W.view wsid)
+  [ (getWsShiftCmd wsid  , windows $ W.shift wsid)
+  , (getWsViewCmd wsid   , windows $ W.view wsid)
+  , (getWsShiftCmd $ show i, windows $ W.shift wsid)
+  , (getWsViewCmd $ show i , windows $ W.view wsid)
   ]
 
 workspaceCommands' :: [WorkspaceId] -> [(String, X ())]

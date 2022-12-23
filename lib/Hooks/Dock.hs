@@ -30,6 +30,10 @@ import           XMonad.Core                    ( Layout
 import qualified XMonad.StackSet               as W
 import           XMonad.Util.Run                ( safeSpawn )
 
+import           Commands                       ( getWsShiftCmd
+                                                , getWsViewCmd
+                                                )
+
 import           Settings                       ( myWorkspaces )
 import           Util                           ( currentWorkspace
                                                 , getNonEmptyWorkspaces
@@ -39,9 +43,10 @@ import           Util                           ( currentWorkspace
 
 -- Generalised information that is specific to each workspace
 data WorkspaceInfo = WorkspaceInfo
-  { name   :: String
-  , state  :: String
-  , action :: String
+  { name    :: String
+  , state   :: String
+  , action  :: String
+  , sAction :: String
   }
   deriving (Generic, Show)
 
@@ -105,21 +110,28 @@ getWorkspaceInfo
   -> [WorkspaceId]
   -> WorkspaceId
   -> WorkspaceInfo
-getWorkspaceInfo currWs visWs nonEmptWs ws = WorkspaceInfo { name   = ws
-                                                           , state  = myState
-                                                           , action = myAction
+getWorkspaceInfo currWs visWs nonEmptWs ws = WorkspaceInfo { name    = ws
+                                                           , state   = myState
+                                                           , action  = myAction
+                                                           , sAction = mySAction
                                                            }
  where
   myState  = getWsState currWs visWs nonEmptWs ws
-  myAction = stateToAction ws myState
+  myAction = (returnIfActive . getActionKey) ws myState
+  mySAction = (returnIfActive . getSecondaryActionKey) ws myState
 
-stateToAction :: WorkspaceId -> String -> String
-stateToAction ws myState | myState == "active" = ""
-                         | otherwise           = getActionKey ws
+returnIfActive :: String -> String -> String
+returnIfActive r myState | myState == "active" = ""
+                         | otherwise           = r
+
 
 -- Creates the correct command for going to a given workspace
 getActionKey :: WorkspaceId -> String
-getActionKey ws = "xmonadctl view_" ++ ws
+getActionKey ws = "xmonadctl " ++ getWsViewCmd ws
+
+getSecondaryActionKey :: WorkspaceId -> String
+getSecondaryActionKey ws = "xmonadctl " ++ getWsShiftCmd ws
+
 
 getAllPerScreenInfo
   :: [W.Screen WorkspaceId (Layout Window) Window ScreenId ScreenDetail]
