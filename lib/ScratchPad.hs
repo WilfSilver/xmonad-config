@@ -15,6 +15,8 @@ import           XMonad.Util.NamedScratchpad    ( NamedScratchpad(NS)
                                                 , namedScratchpadAction
                                                 )
 
+-- TODO define constants for these
+
 myScratchPads :: [NamedScratchpad]
 myScratchPads =
   [

@@ -6,18 +6,13 @@ module Hooks
 import           XMonad                         ( (-->)
                                                 , (<&&>)
                                                 , (=?)
-                                                , Atom
                                                 , Query
-                                                , Window
                                                 , WindowSet
                                                 , X
-                                                , ask
                                                 , className
                                                 , composeAll
                                                 , doFloat
                                                 , doShift
-                                                , getAtom
-                                                , liftX
                                                 , resource
                                                 , spawn
                                                 )
@@ -25,9 +20,7 @@ import           XMonad.Hooks.ManageDocks       ( checkDock )
 import           XMonad.Hooks.ManageHelpers     ( doLower )
 import           XMonad.Hooks.SetWMName         ( setWMName )
 import           XMonad.Util.SpawnOnce          ( spawnOnce )
-import           XMonad.Util.WindowProperties   ( getProp32 )
 
-import           Data.Maybe                     ( fromMaybe )
 import           Data.Monoid                    ( Endo )
 
 import           Settings                       ( myWorkspaces )

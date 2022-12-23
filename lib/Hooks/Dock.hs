@@ -1,7 +1,7 @@
 {-# LANGUAGE DeriveGeneric #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module Dock
+module Hooks.Dock
   ( dockEventLogHook
   , dockStartupHook
   ) where
@@ -12,9 +12,7 @@ import           Data.Aeson                     ( FromJSON
                                                 , encode
                                                 )
 import           Data.ByteString.Lazy.UTF8      ( toString )
-import           Data.List                      ( elemIndex )
 import           Data.List                      ( sortOn )
-import           Data.Maybe                     ( fromMaybe )
 import           GHC.Generics                   ( Generic )
 
 import           XMonad                         ( ScreenDetail
@@ -121,8 +119,7 @@ stateToAction ws myState | myState == "active" = ""
 
 -- Creates the correct command for going to a given workspace
 getActionKey :: WorkspaceId -> String
-getActionKey ws =
-  "xdotool key Super_L+" ++ show (fromMaybe 0 (elemIndex ws myWorkspaces) + 1)
+getActionKey ws = "xmonadctl view_" ++ ws
 
 getAllPerScreenInfo
   :: [W.Screen WorkspaceId (Layout Window) Window ScreenId ScreenDetail]

@@ -45,16 +45,18 @@ import           Control.Monad                  ( when
                                                 )
 import           Data.Maybe                     ( maybeToList )
 
-import           Dock                           ( dockEventLogHook
-                                                , dockStartupHook
-                                                )
 import           Hooks                          ( myManagementHook
                                                 , myStartupHook
                                                 )
+import           Hooks.Dock                     ( dockEventLogHook
+                                                , dockStartupHook
+                                                )
+import           Hooks.Server                   ( myServerEventHook )
+
 import           Keys                           ( myKeys )
 import           Layouts                        ( myLayoutHook )
 import           ScratchPad                     ( myScratchPads )
-import           Server                         ( myServerEventHook )
+
 import           Settings                       ( myBorderWidth
                                                 , myFocusColour
                                                 , myModMask
