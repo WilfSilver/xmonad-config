@@ -67,6 +67,7 @@ import           Settings                       ( myBorderWidth
                                                 )
 
 -- Stolen from https://github.com/evanjs/gentoo-dotfiles/commit/cbf78364ea60e62466594340090d8e99200e8e08 (thanks)
+
 addNETSupported :: Atom -> X ()
 addNETSupported x   = withDisplay $ \dpy -> do
     root            <- asks theRoot

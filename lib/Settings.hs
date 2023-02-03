@@ -27,7 +27,7 @@ myModMask :: KeyMask
 myModMask = mod4Mask       -- Sets mod key to super/windows key
 
 myTerminal :: String
-myTerminal = "terminator"   -- Sets default terminal
+myTerminal = "alacritty"   -- Sets default terminal
 
 myBorderWidth :: Dimension
 myBorderWidth = 2          -- Sets border width for windows

@@ -177,14 +177,14 @@
 	},
 
 	{
-		"id": "lockScreen",
+		"id": "lock-screen",
 		"description": "Locks the screen using betterlockscreen",
 		"binding": "M-S-l",
 		"command": "betterlockscreen -l dimblur"
 	},
 
 	{
-		"id": "appLaunch",
+		"id": "app-launch",
 		"description": "Rofi: Application Menu",
 		"binding": "M-<Space>",
 		"command": "~/.config/rofi/bin/launcher"
@@ -196,38 +196,38 @@
 		"command": "rofi -show run"
 	},
 	{
-		"id": "switchMenu",
+		"id": "switch-menu",
 		"description": "Rofi: Switch Window Menu",
 		"binding": "M-<Tab>",
 		"command": "~/.config/rofi/bin/window_switcher"
 	},
 	{
-		"id": "powerMenu",
+		"id": "power-menu",
 		"description": "Rofi: Power Menu",
 		"binding": "C-M1-<Delete>",
 		"command": "~/.config/rofi/bin/powermenu"
 	},
 
 	{
-		"id": "dunstClose",
+		"id": "dunst-close",
 		"description": "Dunst: Close",
 		"binding": "C-<Space>",
 		"command": "dunstctl close"
 	},
 	{
-		"id": "dunstCloseAll",
+		"id": "dunst-close-all",
 		"description": "Dunst: Close all",
 		"binding": "C-S-<Space>",
 		"command": "dunstctl close-all"
 	},
 	{
-		"id": "dunstHistory",
+		"id": "dunst-history",
 		"description": "Dunst: History",
 		"binding": "C-`",
 		"command": "dunstctl history-pop"
 	},
 	{
-		"id": "dunstContext",
+		"id": "dunst-context",
 		"description": "Dunst: Context",
 		"binding": "C-S-.",
 		"command": "dunstctl context"
