@@ -180,7 +180,7 @@
 		"id": "lock-screen",
 		"description": "Locks the screen using betterlockscreen",
 		"binding": "M-S-l",
-		"command": "betterlockscreen -l dimblur"
+		"command": "xset s activate"
 	},
 
 	{

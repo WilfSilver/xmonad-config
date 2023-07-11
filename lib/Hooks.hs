@@ -27,9 +27,9 @@ import           Settings                       ( myWorkspaces )
 
 myStartupHook :: X ()
 myStartupHook = do
-  spawnOnce "nitrogen --restore &"
+  spawnOnce "start_background"
   spawnOnce "picom &"
-  spawn "~/.config/eww/launch_bar"
+  spawn "eww_ctrl open"
   setWMName "LG3Dw"
 
 myManagementHook :: XMonad.Query (Data.Monoid.Endo WindowSet)

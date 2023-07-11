@@ -20,8 +20,6 @@ import           XMonad.Util.NamedScratchpad    ( NamedScratchpad(NS)
 myScratchPads :: [NamedScratchpad]
 myScratchPads =
   [
-    -- NS "taskwarrior" "urxvtc -name taskwarrior -e ~/bin/tw" (resource =? "taskwarrior")
-    --     (customFloating $ W.RationalRect (2/6) (2/6) (2/6) (2/6))
     NS "term"
        (myTerminal ++ " -T scratchpad")
        (title =? "scratchpad")
