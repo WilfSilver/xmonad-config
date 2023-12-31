@@ -36,8 +36,7 @@ myStartupHook = do
 myManagementHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
 myManagementHook =
   composeAll
-    [ className =? "htop" --> doShift (myWorkspaces !! 3)
-    , className =? "waterfox" --> doShift (myWorkspaces !! 1)
+    [ className =? "waterfox" --> doShift (myWorkspaces !! 1)
     , className =? "code" --> doShift (head myWorkspaces)
     , className =? "Thunderbird" --> doShift (myWorkspaces !! 5)
     , className =? "Spotify" --> doShift (myWorkspaces !! 6)
