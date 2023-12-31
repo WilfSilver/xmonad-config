@@ -1,18 +1,19 @@
-module Util
-  ( currentWorkspace
-  , getNonEmptyWorkspaces
-  , getWindowTitle
-  , visibleWorkspaces
-  ) where
+module Util (
+  currentWorkspace,
+  getNonEmptyWorkspaces,
+  getWindowTitle,
+  visibleWorkspaces,
+) where
 
-import           XMonad                         ( Window
-                                                , WorkspaceId
-                                                , X
-                                                , gets
-                                                , windowset
-                                                )
-import qualified XMonad.StackSet               as W
-import           XMonad.Util.NamedWindows       ( getName )
+import XMonad (
+  Window,
+  WorkspaceId,
+  X,
+  gets,
+  windowset,
+ )
+import qualified XMonad.StackSet as W
+import XMonad.Util.NamedWindows (getName)
 
 -- Gets the current workspace
 currentWorkspace :: X WorkspaceId
@@ -22,12 +23,12 @@ currentWorkspace = do
 
 -- Gets the workspaces that have a window on it (this is a getter because it needs an input)
 getNonEmptyWorkspaces :: [W.Workspace WorkspaceId l a] -> [WorkspaceId]
-getNonEmptyWorkspaces []       = []
+getNonEmptyWorkspaces [] = []
 getNonEmptyWorkspaces (x : xs) = do
   let stack = W.stack x
   case stack of
     Nothing -> getNonEmptyWorkspaces xs
-    Just _  -> W.tag x : getNonEmptyWorkspaces xs
+    Just _ -> W.tag x : getNonEmptyWorkspaces xs
 
 -- Returns windows title
 getWindowTitle :: Window -> X String

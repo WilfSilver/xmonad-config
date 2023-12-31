@@ -1,42 +1,43 @@
-module Settings
-  ( myFont
-  , myModMask
-  , myTerminal
-  , myBorderWidth
-  , myNormColour
-  , myFocusColour
-  , myCurrentWsColour
-  , myVisibleWsColour
-  , myNonEmptyWsColour
-  , myLayoutBackgroundColour
-  , myWorkspaceBackgroundColour
-  , myBarBackgroundColour
-  , myWorkspaces
-  ) where
+module Settings (
+  myFont,
+  myModMask,
+  myTerminal,
+  myBorderWidth,
+  myNormColour,
+  myFocusColour,
+  myCurrentWsColour,
+  myVisibleWsColour,
+  myNonEmptyWsColour,
+  myLayoutBackgroundColour,
+  myWorkspaceBackgroundColour,
+  myBarBackgroundColour,
+  myWorkspaces,
+) where
 
-import           XMonad                         ( Dimension
-                                                , KeyMask
-                                                , WorkspaceId
-                                                , mod4Mask
-                                                )
+import XMonad (
+  Dimension,
+  KeyMask,
+  WorkspaceId,
+  mod4Mask,
+ )
 
 myFont :: String
 myFont = "xft:FiraCode:bold:size=11:antialias=true:hinting=true"
 
 myModMask :: KeyMask
-myModMask = mod4Mask       -- Sets mod key to super/windows key
+myModMask = mod4Mask -- Sets mod key to super/windows key
 
 myTerminal :: String
-myTerminal = "alacritty"   -- Sets default terminal
+myTerminal = "alacritty" -- Sets default terminal
 
 myBorderWidth :: Dimension
-myBorderWidth = 2          -- Sets border width for windows
+myBorderWidth = 2 -- Sets border width for windows
 
 myNormColour :: String
-myNormColour = "#282c34"  -- Border color of normal windows
+myNormColour = "#282c34" -- Border color of normal windows
 
 myFocusColour :: String
-myFocusColour = "#bbc5ff"  -- Border color of focused windows
+myFocusColour = "#bbc5ff" -- Border color of focused windows
 
 myCurrentWsColour :: String
 myCurrentWsColour = "#fc0511" -- Colour of the current active workspace in the bar

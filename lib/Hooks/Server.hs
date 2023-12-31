@@ -1,19 +1,21 @@
-module Hooks.Server
-  ( myServerEventHook
-  ) where
+module Hooks.Server (
+  myServerEventHook,
+) where
 
 -- Extension to XMonad.Actions.Commands to have custom commands
 
-import           XMonad                         ( (<+>)
-                                                , X
-                                                , io
-                                                )
-import           XMonad.Hooks.ServerMode        ( serverModeEventHook'
-                                                , serverModeEventHookCmd'
-                                                , serverModeEventHookF
-                                                )
+import XMonad (
+  X,
+  io,
+  (<+>),
+ )
+import XMonad.Hooks.ServerMode (
+  serverModeEventHook',
+  serverModeEventHookCmd',
+  serverModeEventHookF,
+ )
 
-import           Commands                       ( myCommands )
+import Commands (myCommands)
 
 myXCommands :: X [(String, X ())]
 myXCommands = return myCommands

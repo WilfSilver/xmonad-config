@@ -1,50 +1,54 @@
-{-#LANGUAGE OverloadedStrings#-}
-module Keys
-  ( myKeys
-  , myShortcuts
-  ) where
+{-# LANGUAGE OverloadedStrings #-}
 
-import           XMonad                         ( X
-                                                , spawn
-                                                )
+module Keys (
+  myKeys,
+  myShortcuts,
+) where
 
-import           Control.Monad                  ( mzero )
-import           Data.Aeson                     ( (.:)
-                                                , (.:?)
-                                                , FromJSON
-                                                , Value(Object)
-                                                , eitherDecode
-                                                , parseJSON
-                                                )
-import qualified Data.ByteString.Lazy          as B
-import           Data.Text                      ( Text
-                                                , unpack
-                                                )
+import XMonad (
+  X,
+  spawn,
+ )
 
-import           Commands                       ( getCommand )
+import Control.Monad (mzero)
+import Data.Aeson (
+  FromJSON,
+  Value (Object),
+  eitherDecode,
+  parseJSON,
+  (.:),
+  (.:?),
+ )
+import qualified Data.ByteString.Lazy as B
+import Data.Text (
+  Text,
+  unpack,
+ )
+
+import Commands (getCommand)
 
 data Shortcut = Shortcut
-  { id          :: Text
+  { id :: Text
   , description :: Text
-  , binding     :: Text
-  , command     :: Maybe Text
+  , binding :: Text
+  , command :: Maybe Text
   }
-  deriving Show
+  deriving (Show)
 
 instance FromJSON Shortcut where
   parseJSON (Object v) =
     Shortcut
       <$> v
-      .:  "id"
+        .: "id"
       <*> v
-      .:  "description"
+        .: "description"
       <*> v
-      .:  "binding"
+        .: "binding"
       <*> v
-      .:? "command"
+        .:? "command"
   parseJSON _ = mzero
 
-  -- TODO: Make it so it is dynamic to current user's directory or xmonad config
+-- TODO: Make it so it is dynamic to current user's directory or xmonad config
 shortcutsConfigFile :: FilePath
 shortcutsConfigFile = "/home/hugo/.xmonad/config/keys.json"
 
@@ -56,7 +60,7 @@ myShortcuts = do
   output <-
     (eitherDecode <$> getShortcutsConfig) :: IO (Either String [Shortcut])
   case output of
-    Left  _  -> return []
+    Left _ -> return []
     Right ps -> return ps
 
 extractKeys :: Shortcut -> (String, X ())
