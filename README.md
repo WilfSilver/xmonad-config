@@ -22,7 +22,7 @@ I mainly use this to explore different things you can do with xmonad and cool st
 - Application switcher: Rofi
 - Terminal: Kitty
 - Browser: Firefox
-- Backgrounds: Nitrogen
+- Backgrounds: feh
 - Compositor: picom
 - Lockscreen: xsecurelock
 - Notifications: Dunst
@@ -58,9 +58,8 @@ sudo xbps-install \
   git gmp-devel iana-etc zlib gmp libffi libnuma 
 ```
 
-On void linux, the `xmonad` does not come with a bunch of haskell dependencies,
-so you can also install that (on arch probably just manually add the session
-file etc)
+`xmonad` should also be installed (or you can probably just copy the binaries
+to `/usr/bin` or `/bin` manually)
 
 I currently don't use void linux so I can't test this out
 
@@ -75,8 +74,14 @@ sudo xbps-install \
 
 You should then be able to run:
 
-```
+```sh
 stack install
+```
+
+You can also copy the xmonad desktop file:
+
+```sh
+sudo cp xmonad.desktop /usr/share/xsessions/
 ```
 
 ### Developing
