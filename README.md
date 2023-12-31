@@ -16,13 +16,15 @@ I mainly use this to explore different things you can do with xmonad and cool st
 ## My current setup
 
 - Font: FiraCode / FontAwesome
-- Bar: Polybar (however currently testing to switch to eww)
+- Bar: Eww (specifically my branch)
+  - This currently writes to files in json format which can be then read by
+    other programs to get the workspace names etc
 - Application switcher: Rofi
-- Terminal: Terminator
-- Browser: Waterfox
+- Terminal: Kitty
+- Browser: Firefox
 - Backgrounds: Nitrogen
 - Compositor: picom
-- Lockscreen: betterlockscreen
+- Lockscreen: xsecurelock
 - Notifications: Dunst
 - Other applications mentioned in config:
   - Spotify
@@ -30,35 +32,56 @@ I mainly use this to explore different things you can do with xmonad and cool st
   - Signal
   - Gimp
   - Thunderbird
-  - htop
 
 ## Current plan
 
-- Move more information to config files (maybe not json files...)
+This is just a rough plan as I don't actively work on this unless its broken or
+I want to lean about something
+
+- Move more information to config files (maybe not json files... but probably
+  going to be json)
 - Improve the `xmonadctl` experience
-- Tidy up more
-- Better ScratchPads?
-- Comment stuff like a proper haskell project
-- Clean up the `my-xmonad.cabal`
+  - I kinda want to add pipes so I don't have to write to files for the bar
+    communication
 
 ## Install guide
 
-### Arch Linux
+This is for void linux but can be translated to work with arch
 
-### Void Linux
+### Dependencies
+
+Normally I install haskell through ghcup (definitely recommended for this
+project) but you will need the following packages for stack to work properly:
+
+```sh
+sudo xbps-install \
+  git gmp-devel iana-etc zlib gmp libffi libnuma 
+```
+
+On void linux, the `xmonad` does not come with a bunch of haskell dependencies,
+so you can also install that (on arch probably just manually add the session
+file etc)
 
 I currently don't use void linux so I can't test this out
 
+```sh
 sudo xbps-install \
   libX11-devel \
   libXScrnSaver-devel \
   libXft-devel \
   libXinerama-devel \
   libXrandr-devel
+```
 
-sudo xbps-install stack cabal-install
+You should then be able to run:
 
-cabal install --lib xmonad xmonad-contrib X11
-cabal install xmonad
+```
+stack install
+```
 
-add $HOME/.cabal/bin to PATH
+### Developing
+
+If you are wanting HLS to work, the current GHC version is locked on 9.4.8 for
+this project (stack will automatically download). But you will have to make
+sure you have a version of HLS which works with this - currently the latest
+should work but this could change so please check [this page](https://haskell-language-server.readthedocs.io/en/latest/support/ghc-version-support.html)
