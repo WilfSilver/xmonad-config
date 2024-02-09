@@ -1,235 +1,235 @@
 [
-	{
-		"id": "recompile",
-		"description": "Recompile XMonad",
-		"binding": "M-C-r"
-	},
-	{
-		"id": "restart",
-		"description": "Restart XMonad",
-		"binding": "M-S-r"
-	},
-	{
-		"id": "quit",
-		"description": "Quit XMonad",
-		"binding": "M-S-q"
-	},
+  {
+    "id": "recompile",
+    "description": "Recompile XMonad",
+    "binding": "M-C-r"
+  },
+  {
+    "id": "restart",
+    "description": "Restart XMonad",
+    "binding": "M-S-r"
+  },
+  {
+    "id": "quit",
+    "description": "Quit XMonad",
+    "binding": "M-S-q"
+  },
 
-	{
-		"id": "close",
-		"description": "Close Current Window",
-		"binding": "M-w"
-	},
-	{
-		"id": "close-all",
-		"description": "Close All Windows On Workspaces",
-		"binding": "M-S-w"
-	},
-	{
-		"id": "focus-master",
-		"description": "Move To Master Window",
-		"binding": "M-m"
-	},
-	{
-		"id": "focus-next",
-		"description": "Move To Next Window",
-		"binding": "M-j"
-	},
-	{
-		"id": "focus-prev",
-		"description": "Move To Prev Window",
-		"binding": "M-k"
-	},
-	{
-		"id": "swap-with-master",
-		"description": "Swap Focused And Master Window",
-		"binding": "M-S-m"
-	},
-	{
-		"id": "swap-with-next",
-		"description": "Swap Focused With Next Window",
-		"binding": "M-S-j"
-	},
-	{
-		"id": "swap-with-prev",
-		"description": "Swap Focused With Prev Window",
-		"binding": "M-S-k"
-	},
-	{
-		"id": "promote",
-		"description": "Moves Focused Window To Master",
-		"binding": "M-<Backspace>"
-	},
-	{
-		"id": "rotate-slaves",
-		"description": "Rotate All Windows Except Master",
-		"binding": "M1-S-<Tab>"
-	},
-	{
-		"id": "rotate-all",
-		"description": "Rotate All Windows",
-		"binding": "M1-C-<Tab>"
-	},
+  {
+    "id": "close",
+    "description": "Close Current Window",
+    "binding": "M-w"
+  },
+  {
+    "id": "close-all",
+    "description": "Close All Windows On Workspaces",
+    "binding": "M-S-w"
+  },
+  {
+    "id": "focus-master",
+    "description": "Move To Master Window",
+    "binding": "M-m"
+  },
+  {
+    "id": "focus-next",
+    "description": "Move To Next Window",
+    "binding": "M-j"
+  },
+  {
+    "id": "focus-prev",
+    "description": "Move To Prev Window",
+    "binding": "M-k"
+  },
+  {
+    "id": "swap-with-master",
+    "description": "Swap Focused And Master Window",
+    "binding": "M-S-m"
+  },
+  {
+    "id": "swap-with-next",
+    "description": "Swap Focused With Next Window",
+    "binding": "M-S-j"
+  },
+  {
+    "id": "swap-with-prev",
+    "description": "Swap Focused With Prev Window",
+    "binding": "M-S-k"
+  },
+  {
+    "id": "promote",
+    "description": "Moves Focused Window To Master",
+    "binding": "M-<Backspace>"
+  },
+  {
+    "id": "rotate-slaves",
+    "description": "Rotate All Windows Except Master",
+    "binding": "M1-S-<Tab>"
+  },
+  {
+    "id": "rotate-all",
+    "description": "Rotate All Windows",
+    "binding": "M1-C-<Tab>"
+  },
 
-	{
-		"id": "toggle-float",
-		"description": "Toggles 'floats' Layout",
-		"binding": "M-f"
-	},
-	{
-		"id": "float-to-tile",
-		"description": "Push Floating Window To Tile",
-		"binding": "M-<Delete>"
-	},
-	{
-		"id": "all-float-to-tile",
-		"description": "Push All Floating Windows To Tile",
-		"binding": "M-S-<Delete>"
-	},
+  {
+    "id": "toggle-float",
+    "description": "Toggles 'floats' Layout",
+    "binding": "M-f"
+  },
+  {
+    "id": "float-to-tile",
+    "description": "Push Floating Window To Tile",
+    "binding": "M-<Delete>"
+  },
+  {
+    "id": "all-float-to-tile",
+    "description": "Push All Floating Windows To Tile",
+    "binding": "M-S-<Delete>"
+  },
 
-	{
-		"id": "next-layout",
-		"description": "Switch To Next Layout",
-		"binding": "M-S-<Tab>"
-	},
-	{
-		"id": "arrange",
-		"description": "Arrange",
-		"binding": "M-C-M1-<Up>"
-	},
-	{
-		"id": "dearrange",
-		"description": "DeArrange",
-		"binding": "M-C-M1-<Down>"
-	},
-	{
-		"id": "fullscreen",
-		"description": "Toggle Fullscreen",
-		"binding": "M-S-f"
-	},
-	{
-		"id": "toggle-struts",
-		"description": "Toggle Struts",
-		"binding": "M-S-<Space>"
-	},
-	{
-		"id": "shrink-horz",
-		"description": "Shrink Window Horiz",
-		"binding": "M-h"
-	},
-	{
-		"id": "expand-horz",
-		"description": "Expand Window Horiz",
-		"binding": "M-l"
-	},
-	{
-		"id": "shrink-vert",
-		"description": "Shrink Window Vert",
-		"binding": "M-C-j"
-	},
-	{
-		"id": "expand-vert",
-		"description": "Expand Window Vert",
-		"binding": "M-C-k"
-	},
+  {
+    "id": "next-layout",
+    "description": "Switch To Next Layout",
+    "binding": "M-S-<Tab>"
+  },
+  {
+    "id": "arrange",
+    "description": "Arrange",
+    "binding": "M-C-M1-<Up>"
+  },
+  {
+    "id": "dearrange",
+    "description": "DeArrange",
+    "binding": "M-C-M1-<Down>"
+  },
+  {
+    "id": "fullscreen",
+    "description": "Toggle Fullscreen",
+    "binding": "M-S-f"
+  },
+  {
+    "id": "toggle-struts",
+    "description": "Toggle Struts",
+    "binding": "M-S-<Space>"
+  },
+  {
+    "id": "shrink-horz",
+    "description": "Shrink Window Horiz",
+    "binding": "M-h"
+  },
+  {
+    "id": "expand-horz",
+    "description": "Expand Window Horiz",
+    "binding": "M-l"
+  },
+  {
+    "id": "shrink-vert",
+    "description": "Shrink Window Vert",
+    "binding": "M-C-j"
+  },
+  {
+    "id": "expand-vert",
+    "description": "Expand Window Vert",
+    "binding": "M-C-k"
+  },
 
-	{
-		"id": "next-screen",
-		"description": "Switch To Next Monitor",
-		"binding": "M-."
-	},
-	{
-		"id": "prev-screen",
-		"description": "Switch To Prev Monitor",
-		"binding": "M-,"
-	},
-	{
-		"id": "next-ws",
-		"description": "Switch To Next Workspace",
-		"binding": "M-S-."
-	},
-	{
-		"id": "prev-ws",
-		"description": "Switch To Prev Workspace",
-		"binding": "M-S-,"
-	},
+  {
+    "id": "next-screen",
+    "description": "Switch To Next Monitor",
+    "binding": "M-."
+  },
+  {
+    "id": "prev-screen",
+    "description": "Switch To Prev Monitor",
+    "binding": "M-,"
+  },
+  {
+    "id": "next-ws",
+    "description": "Switch To Next Workspace",
+    "binding": "M-S-."
+  },
+  {
+    "id": "prev-ws",
+    "description": "Switch To Prev Workspace",
+    "binding": "M-S-,"
+  },
 
-	{
-		"id": "term",
-		"description": "Open Terminal",
-		"binding": "M-<Return>"
-	},
-	{
-		"id": "screenshot",
-		"description": "Screenshot",
-		"binding": "M-S-s",
-		"command": "flameshot gui"
-	},
-	{
-		"id": "scratch-term",
-		"description": "ScratchPad: Terminal",
-		"binding": "M-S-<Return>"
-	},
-	{
-		"id": "scratch-volume",
-		"description": "ScratchPad: Volume control",
-		"binding": "M-v"
-	},
+  {
+    "id": "term",
+    "description": "Open Terminal",
+    "binding": "M-<Return>"
+  },
+  {
+    "id": "screenshot",
+    "description": "Screenshot",
+    "binding": "M-S-s",
+    "command": "flameshot gui"
+  },
+  {
+    "id": "scratch-term",
+    "description": "ScratchPad: Terminal",
+    "binding": "M-S-<Return>"
+  },
+  {
+    "id": "scratch-volume",
+    "description": "ScratchPad: Volume control",
+    "binding": "M-v"
+  },
 
-	{
-		"id": "lock-screen",
-		"description": "Locks the screen using betterlockscreen",
-		"binding": "M-S-l",
-		"command": "xset s activate"
-	},
+  {
+    "id": "lock-screen",
+    "description": "Locks the screen using betterlockscreen",
+    "binding": "M-S-l",
+    "command": "xset s activate"
+  },
 
-	{
-		"id": "app-launch",
-		"description": "Rofi: Application Menu",
-		"binding": "M-<Space>",
-		"command": "~/.config/rofi/bin/launcher"
-	},
-	{
-		"id": "command",
-		"description": "Rofi: Run Command",
-		"binding": "M-S-<Space>",
-		"command": "rofi -show run"
-	},
-	{
-		"id": "switch-menu",
-		"description": "Rofi: Switch Window Menu",
-		"binding": "M-<Tab>",
-		"command": "~/.config/rofi/bin/window_switcher"
-	},
-	{
-		"id": "power-menu",
-		"description": "Rofi: Power Menu",
-		"binding": "C-M1-<Delete>",
-		"command": "~/.config/rofi/bin/powermenu"
-	},
+  {
+    "id": "app-launch",
+    "description": "Rofi: Application Menu",
+    "binding": "M-<Space>",
+    "command": "~/.config/rofi/launchers/type-6/launcher.sh"
+  },
+  {
+    "id": "command",
+    "description": "Rofi: Run Command",
+    "binding": "M-S-<Space>",
+    "command": "~/.config/rofi/launchers/type-6/launcher.sh"
+  },
+  {
+    "id": "switch-menu",
+    "description": "Rofi: Switch Window Menu",
+    "binding": "M-<Tab>",
+    "command": "~/.config/rofi/bin/window_switcher"
+  },
+  {
+    "id": "power-menu",
+    "description": "Rofi: Power Menu",
+    "binding": "C-M1-<Delete>",
+    "command": "~/.config/rofi/powermenu/type-5/powermenu.sh"
+  },
 
-	{
-		"id": "dunst-close",
-		"description": "Dunst: Close",
-		"binding": "C-<Space>",
-		"command": "dunstctl close"
-	},
-	{
-		"id": "dunst-close-all",
-		"description": "Dunst: Close all",
-		"binding": "C-S-<Space>",
-		"command": "dunstctl close-all"
-	},
-	{
-		"id": "dunst-history",
-		"description": "Dunst: History",
-		"binding": "C-`",
-		"command": "dunstctl history-pop"
-	},
-	{
-		"id": "dunst-context",
-		"description": "Dunst: Context",
-		"binding": "C-S-.",
-		"command": "dunstctl context"
-	}
+  {
+    "id": "dunst-close",
+    "description": "Dunst: Close",
+    "binding": "C-<Space>",
+    "command": "dunstctl close"
+  },
+  {
+    "id": "dunst-close-all",
+    "description": "Dunst: Close all",
+    "binding": "C-S-<Space>",
+    "command": "dunstctl close-all"
+  },
+  {
+    "id": "dunst-history",
+    "description": "Dunst: History",
+    "binding": "C-`",
+    "command": "dunstctl history-pop"
+  },
+  {
+    "id": "dunst-context",
+    "description": "Dunst: Context",
+    "binding": "C-S-.",
+    "command": "dunstctl context"
+  }
 ]
