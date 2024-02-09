@@ -95,7 +95,7 @@ magnify =
           ResizableTall 1 (3 / 100) (1 / 2) []
 
 monocle :: (Eq a) => ModifiedLayout Rename (ModifiedLayout LimitWindows Full) a
-monocle = renamed [Replace "\x1f9d0"] $ limitWindows 20 Full
+monocle = renamed [Replace "\xf525"] $ limitWindows 20 Full
 
 floats ::
   (Eq a) =>
