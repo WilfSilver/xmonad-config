@@ -22,7 +22,7 @@ I mainly use this to explore different things you can do with xmonad and cool st
 - Application switcher: Rofi
 - Terminal: Kitty
 - Browser: Firefox
-- Backgrounds: feh
+- Backgrounds: feh (via `start_brackground` wrapper script)
 - Compositor: picom
 - Lockscreen: xsecurelock
 - Notifications: Dunst
@@ -83,6 +83,16 @@ You can also copy the xmonad desktop file:
 ```sh
 sudo cp xmonad.desktop /usr/share/xsessions/
 ```
+
+### Recommendations
+
+For your `.xprofile`, I recommend adding:
+
+```sh
+export PATH="$HOME/.ghcup/bin:$HOME/.local/bin:$PATH"
+```
+
+This is so that xmonad can find all the binary files
 
 ### Developing
 
