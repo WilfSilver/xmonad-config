@@ -122,9 +122,6 @@ toMasks 4 = return mod4Mask
 toMasks 5 = return mod5Mask
 toMasks _ = fail "Mod mask has to be a number between 0-5"
 
--- instance FromJSON KeyMask where
---     parseJSON = withScientific "modMask" $ \num -> return masks !! num
-
 instance FromJSON Config where
     parseJSON (Object v) = do
         myModMask <- v .: "modMask"
