@@ -1,70 +1,192 @@
+{-# LANGUAGE OverloadedStrings #-}
+
 module Settings (
-  myFont,
-  myModMask,
-  myTerminal,
-  myBorderWidth,
-  myNormColour,
-  myFocusColour,
-  myCurrentWsColour,
-  myVisibleWsColour,
-  myNonEmptyWsColour,
-  myLayoutBackgroundColour,
-  myWorkspaceBackgroundColour,
-  myBarBackgroundColour,
-  myWorkspaces,
+    ColourConfig,
+    Workspaces,
+    Config,
+    StartUp,
+    process,
+    once,
+    startup,
+    norm,
+    focus,
+    current,
+    visible,
+    nonEmpty,
+    layoutBg,
+    workspaceBg,
+    barBg,
+    font,
+    modMask,
+    borderWidth,
+    terminal,
+    colours,
+    workspaces,
+    defaultConfig,
+    getWs,
+    getConfigDir,
+    getConfigFile,
+    mySettings,
 ) where
 
+import System.Environment (getEnv)
 import XMonad (
-  Dimension,
-  KeyMask,
-  WorkspaceId,
-  mod4Mask,
+    Dimension,
+    KeyMask,
+    WorkspaceId,
+    mod1Mask,
+    mod2Mask,
+    mod3Mask,
+    mod4Mask,
+    mod5Mask,
  )
 
-myFont :: String
-myFont = "xft:FiraCode:bold:size=11:antialias=true:hinting=true"
+import Control.Monad (mzero)
+import Data.Aeson (
+    FromJSON,
+    Value (Object, String),
+    parseJSON,
+    withScientific,
+    (.:),
+    (.:?),
+ )
+import Data.Text (unpack)
+import Data.Yaml (ParseException, decodeFileEither)
 
-myModMask :: KeyMask
-myModMask = mod4Mask -- Sets mod key to super/windows key
+type Workspaces = [WorkspaceId]
 
-myTerminal :: String
-myTerminal = "kitty" -- Sets default terminal
+data StartUp = StartUp
+    { process :: !String
+    , once :: !(Maybe Bool)
+    }
+    deriving (Show)
 
-myBorderWidth :: Dimension
-myBorderWidth = 2 -- Sets border width for windows
+instance FromJSON StartUp where
+    parseJSON (Object v) =
+        StartUp
+            <$> v
+                .: "process"
+            <*> v
+                .:? "once"
+    parseJSON (String v) =
+        return
+            StartUp
+                { process = unpack v
+                , once = Just False
+                }
+    parseJSON _ = mzero
 
-myNormColour :: String
-myNormColour = "#282c34" -- Border color of normal windows
+data ColourConfig = ColourConfig
+    { norm :: !String -- Border color of normal windows
+    , focus :: !String -- Border color of focused windows
+    , current :: !String -- Colour of the current active workspace in the bar
+    , visible :: !String -- Colour of the visible workspaces in the bar (e.g. workspaces on different screens)
+    , nonEmpty :: !String -- Colour of the workspaces with windows open on them
+    , layoutBg :: !String
+    , workspaceBg :: !String
+    , barBg :: !String
+    }
+    deriving (Show)
 
-myFocusColour :: String
-myFocusColour = "#bbc5ff" -- Border color of focused windows
+instance FromJSON ColourConfig where
+    parseJSON (Object v) =
+        ColourConfig
+            <$> v .: "norm"
+            <*> v .: "focus"
+            <*> v .: "current"
+            <*> v .: "visible"
+            <*> v .: "nonEmpty"
+            <*> v .: "layoutBg"
+            <*> v .: "workspaceBg"
+            <*> v .: "barBg"
+    parseJSON _ = mzero
 
-myCurrentWsColour :: String
-myCurrentWsColour = "#fc0511" -- Colour of the current active workspace in the bar
+data Config = Config
+    { font :: !String
+    , modMask :: !KeyMask
+    , terminal :: !String
+    , borderWidth :: !Dimension
+    , colours :: !ColourConfig
+    , workspaces :: !Workspaces
+    , startup :: ![StartUp]
+    }
+    deriving (Show)
 
-myVisibleWsColour :: String
-myVisibleWsColour = "#e88700" -- Colour of the visible workspaces in the bar (e.g. workspaces on different screens)
+toMasks 1 = return mod1Mask
+toMasks 2 = return mod2Mask
+toMasks 3 = return mod3Mask
+toMasks 4 = return mod4Mask
+toMasks 5 = return mod5Mask
+toMasks _ = fail "Mod mask has to be a number between 0-5"
 
-myNonEmptyWsColour :: String
-myNonEmptyWsColour = "#e8e000" -- Colour of the workspaces with windows open on them
+-- instance FromJSON KeyMask where
+--     parseJSON = withScientific "modMask" $ \num -> return masks !! num
 
-myLayoutBackgroundColour :: String
-myLayoutBackgroundColour = "#282c34"
+instance FromJSON Config where
+    parseJSON (Object v) = do
+        myModMask <- v .: "modMask"
 
-myWorkspaceBackgroundColour :: String
-myWorkspaceBackgroundColour = "#383d47"
+        Config
+            <$> v .: "font"
+            <*> withScientific
+                "KeyMask"
+                toMasks
+                myModMask
+            <*> v .: "terminal"
+            <*> v .: "borderWidth"
+            <*> v .: "colours"
+            <*> v .: "workspaces"
+            <*> v .: "startup"
+    parseJSON _ = mzero
 
-myBarBackgroundColour :: String
-myBarBackgroundColour = "#282c34"
+defaultConfig =
+    Config
+        { font = "xft:FiraCode:bold:size=11:antialias=true:hinting=true"
+        , modMask = mod4Mask
+        , terminal = "kitty"
+        , borderWidth = 0
+        , colours =
+            ColourConfig
+                { norm = "#fff"
+                , focus = "#fff"
+                , current = "#fff"
+                , visible = "#fff"
+                , nonEmpty = "#fff"
+                , layoutBg = "#fff"
+                , workspaceBg = "#fff"
+                , barBg = "#fff"
+                }
+        , workspaces =
+            map
+                show
+                ( [ 1
+                  .. 8
+                  ] ::
+                    [Integer]
+                )
+        , startup = []
+        }
 
-myWorkspaces :: [WorkspaceId]
-myWorkspaces =
-  [ "\xf121" -- dev   1
-  , "\xf7a2" -- www   2
-  , "\xf120" -- sys   3
-  , "\xf02d" -- doc   4
-  , "\xf392" -- chat  5
-  , "\xf0e0" -- mail  6
-  , "\xf001" -- music 7
-  , "\xf0c2" -- gfx   8
-  ]
+getWs :: Int -> Config -> WorkspaceId
+getWs i c = workspaces c !! i
+
+getConfigDir :: IO String
+getConfigDir = do
+    path <- getEnv "HOME"
+    return (path ++ "/.xmonad/config")
+
+getConfigFile :: String -> IO String
+getConfigFile file = do
+    path <- getConfigDir
+    return (path ++ "/" ++ file)
+
+mySettings :: IO Config
+mySettings = do
+    configFile <- getConfigFile "settings.yaml"
+    output <-
+        decodeFileEither configFile :: IO (Either ParseException Config)
+    case output of
+        Left err -> do
+            print err
+            return defaultConfig
+        Right ps -> return ps

@@ -1,0 +1,28 @@
+font: xft:FiraCode:bold:size=11:antialias=true:hinting=true
+terminal: kitty
+borderWidth: 2
+modMask: 4
+colours:
+  norm: "#282c34"
+  focus: "#bbc5ff"
+  current: "#fc0511"
+  visible: "#e88700"
+  nonEmpty: "#e8e000"
+  layoutBg: "#282c34"
+  workspaceBg: "#383d47"
+  barBg: "#282c34"
+workspaces:
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+  - 
+startup:
+  - process: start_background
+    once: true
+  - process: picom &
+    once: true
+  - eww_ctrl open

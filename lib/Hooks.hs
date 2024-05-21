@@ -1,21 +1,21 @@
 module Hooks (
-  myStartupHook,
-  myManagementHook,
+    myStartupHook,
+    myManagementHook,
 ) where
 
 import XMonad (
-  Query,
-  WindowSet,
-  X,
-  className,
-  composeAll,
-  doFloat,
-  doShift,
-  resource,
-  spawn,
-  (-->),
-  (<&&>),
-  (=?),
+    Query,
+    WindowSet,
+    X,
+    className,
+    composeAll,
+    doFloat,
+    doShift,
+    resource,
+    spawn,
+    (-->),
+    (<&&>),
+    (=?),
  )
 import XMonad.Hooks.ManageDocks (checkDock)
 import XMonad.Hooks.ManageHelpers (doLower)
@@ -24,26 +24,33 @@ import XMonad.Util.SpawnOnce (spawnOnce)
 
 import Data.Monoid (Endo)
 
-import Settings (myWorkspaces)
+import Data.Maybe (fromMaybe)
+import qualified Settings as S
 
-myStartupHook :: X ()
-myStartupHook = do
-  spawnOnce "start_background"
-  spawnOnce "picom &"
-  spawn "eww_ctrl open"
-  setWMName "LG3Dw"
+runStartup :: [S.StartUp] -> X ()
+runStartup [] = return ()
+runStartup (x : xs) = do
+    if fromMaybe False (S.once x) then spawnOnce process else spawn process
+    runStartup xs
+  where
+    process = S.process x
 
-myManagementHook :: XMonad.Query (Data.Monoid.Endo WindowSet)
-myManagementHook =
-  composeAll
-    [ className =? "waterfox" --> doShift (myWorkspaces !! 1)
-    , className =? "code" --> doShift (head myWorkspaces)
-    , className =? "Thunderbird" --> doShift (myWorkspaces !! 5)
-    , className =? "Spotify" --> doShift (myWorkspaces !! 6)
-    , className =? "discord" --> doShift (myWorkspaces !! 4)
-    , className =? "Signal" --> doShift (myWorkspaces !! 4)
-    , className =? "Gimp" --> doShift (myWorkspaces !! 7)
-    , className =? "Gimp" --> doFloat
-    , (className =? "waterfox" <&&> resource =? "Dialog") --> doFloat
-    , checkDock --> doLower
-    ]
+myStartupHook :: S.Config -> X ()
+myStartupHook c = do
+    runStartup $ S.startup c
+    setWMName "LG3Dw"
+
+myManagementHook :: S.Config -> XMonad.Query (Data.Monoid.Endo WindowSet)
+myManagementHook c =
+    composeAll
+        [ className =? "waterfox" --> doShift (S.getWs 1 c)
+        , className =? "code" --> doShift (S.getWs 0 c)
+        , className =? "Thunderbird" --> doShift (S.getWs 5 c)
+        , className =? "Spotify" --> doShift (S.getWs 6 c)
+        , className =? "discord" --> doShift (S.getWs 4 c)
+        , className =? "Signal" --> doShift (S.getWs 4 c)
+        , className =? "Gimp" --> doShift (S.getWs 7 c)
+        , className =? "Gimp" --> doFloat
+        , (className =? "waterfox" <&&> resource =? "Dialog") --> doFloat
+        , checkDock --> doLower
+        ]
