@@ -26,3 +26,5 @@ startup:
   - process: picom &
     once: true
   - eww_ctrl open
+titleLogFile: /tmp/.xmonad-per-screen-log
+wsLogFile: /tmp/.xmonad-workspace-log

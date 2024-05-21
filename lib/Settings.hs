@@ -27,6 +27,8 @@ module Settings (
     getConfigDir,
     getConfigFile,
     mySettings,
+    titleLogFile,
+    wsLogFile,
 ) where
 
 import System.Environment (getEnv)
@@ -109,6 +111,8 @@ data Config = Config
     , colours :: !ColourConfig
     , workspaces :: !Workspaces
     , startup :: ![StartUp]
+    , titleLogFile :: !FilePath
+    , wsLogFile :: !FilePath
     }
     deriving (Show)
 
@@ -137,8 +141,11 @@ instance FromJSON Config where
             <*> v .: "colours"
             <*> v .: "workspaces"
             <*> v .: "startup"
+            <*> v .: "titleLogFile"
+            <*> v .: "wsLogFile"
     parseJSON _ = mzero
 
+-- TODO: Use defaults in haskell
 defaultConfig =
     Config
         { font = "xft:FiraCode:bold:size=11:antialias=true:hinting=true"
@@ -165,6 +172,8 @@ defaultConfig =
                     [Integer]
                 )
         , startup = []
+        , titleLogFile = "/tmp/.xmonad-per-screen-log"
+        , wsLogFile = "/tmp/.xmonad-workspace-log"
         }
 
 getWs :: Int -> Config -> WorkspaceId

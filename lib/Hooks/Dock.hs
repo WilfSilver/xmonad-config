@@ -99,9 +99,8 @@ dockEventLogHook c = do
     io $ writeFile titleLogFile $ (toString . encode) perScreenInfo
     io $ writeFile workspaceLogFile $ (toString . encode) worksInfo
   where
-    -- Log file locations TODO: Move to settings
-    titleLogFile = "/tmp/.xmonad-per-screen-log"
-    workspaceLogFile = "/tmp/.xmonad-workspace-log"
+    titleLogFile = S.titleLogFile c
+    workspaceLogFile = S.wsLogFile c
 
 getWsState ::
     WorkspaceId -> [WorkspaceId] -> [WorkspaceId] -> WorkspaceId -> String
@@ -169,6 +168,13 @@ getTitleFor ws = do
     maybeStack = W.stack ws
 
 shortenTitle :: String -> String
-shortenTitle x
-    | length x > 50 = take 47 x ++ "..."
-    | otherwise = x
+shortenTitle = fst . shortenTitleTo 50
+
+-- Infinite string safety (like that's ever going to be necessary)
+shortenTitleTo :: Int -> String -> (String, Bool)
+shortenTitleTo _ [] = ("", False)
+shortenTitleTo i (x : xs)
+    | i <= 0 = ("", True)
+    | otherwise = ((if i <= 3 && cutShort then '.' else x) : res, cutShort)
+  where
+    (res, cutShort) = shortenTitleTo (i - 1) xs
