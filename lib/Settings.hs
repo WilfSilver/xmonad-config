@@ -22,7 +22,6 @@ module Settings (
     terminal,
     colours,
     workspaces,
-    defaultConfig,
     getWs,
     getConfigDir,
     getConfigFile,
@@ -145,37 +144,6 @@ instance FromJSON Config where
             <*> v .: "wsLogFile"
     parseJSON _ = mzero
 
--- TODO: Use defaults in haskell
-defaultConfig =
-    Config
-        { font = "xft:FiraCode:bold:size=11:antialias=true:hinting=true"
-        , modMask = mod4Mask
-        , terminal = "kitty"
-        , borderWidth = 0
-        , colours =
-            ColourConfig
-                { norm = "#fff"
-                , focus = "#fff"
-                , current = "#fff"
-                , visible = "#fff"
-                , nonEmpty = "#fff"
-                , layoutBg = "#fff"
-                , workspaceBg = "#fff"
-                , barBg = "#fff"
-                }
-        , workspaces =
-            map
-                show
-                ( [ 1
-                  .. 8
-                  ] ::
-                    [Integer]
-                )
-        , startup = []
-        , titleLogFile = "/tmp/.xmonad-per-screen-log"
-        , wsLogFile = "/tmp/.xmonad-workspace-log"
-        }
-
 getWs :: Int -> Config -> WorkspaceId
 getWs i c = workspaces c !! i
 
@@ -197,5 +165,5 @@ mySettings = do
     case output of
         Left err -> do
             print err
-            return defaultConfig
+            fail ("Invalid config file: " ++ show err)
         Right ps -> return ps
